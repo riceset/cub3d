@@ -3,7 +3,7 @@ CC = cc
 RM = rm -rf
 MKDIR = mkdir -p
 INCLUDES = -I ./includes
-CFLAGS = -Wall -Wextra -Werror $(INCLUDES)
+CFLAGS = -Wall -Wextra -Werror -Imlx $(INCLUDES)
 
 FILES = main.c
 
