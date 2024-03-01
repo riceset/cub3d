@@ -5,6 +5,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "../minilibx/mlx.h"
+#include "../libraries/minilibx/mlx.h"
 
 #endif

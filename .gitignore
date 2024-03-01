@@ -57,3 +57,7 @@ objects/
 
 compile_commands.json
 .cache/
+.DS_Store
+
+# Libraries
+libraries/
