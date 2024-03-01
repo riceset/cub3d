@@ -13,7 +13,9 @@ RM = rm -rf
 
 OBJ_DIR = objects
 
-INC = -I ./includes -I ./mlx
+MLX_DIR = ./libraries/mlx
+
+INC = -I ./includes -I $(MLX_DIR)
 
 ifeq ($(MAKECMDGOALS), debug)
 	CFLAGS += -DDEBUG
@@ -44,8 +46,8 @@ endef
 all : $(NAME)
 
 $(NAME): $(OBJS)
-	@ $(MAKE) -C ./mlx
-	@ $(CC) $(CFLAGS) -o $@ $^ -Lmlx -lmlx -framework OpenGL -framework AppKit
+	@ $(MAKE) -C $(MLX_DIR)
+	@ $(CC) $(CFLAGS) -o $@ $^ -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 	@ printf "$(CHECK) $(BLUE)Compiled $(NAME)!%-50.50s\n$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -54,12 +56,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(call progress)
 
 clean :
-	@ $(MAKE) -C ./mlx clean
+	@ $(MAKE) -C $(MLX_DIR) clean
 	@ $(RM) $(OBJ_DIR)
 	@ echo "$(REMOVE) $(BLUE)Removing $(NAME) object files $(RESET)"
 
 fclean :
-	@ $(MAKE) -C ./mlx fclean
+	@ $(MAKE) -C $(MLX_DIR) fclean
 	@ $(RM) $(OBJ_DIR) $(NAME)
 	@ echo "$(REMOVE) $(BLUE)Removing $(NAME) object files and $(NAME) $(RESET)"
 
