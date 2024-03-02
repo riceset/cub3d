@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-# define CUB3D_H
+#define CUB3D_H
 
-# include "../mlx/mlx.h"
-# include <math.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+#include "../libraries/mlx/mlx.h"
+#include "../libraries/get_next_line/get_next_line.h"
+#include "../libraries/ft_printf/ft_printf.h"
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #endif
