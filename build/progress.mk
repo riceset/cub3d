@@ -1,4 +1,4 @@
-TOTAL_FILES := $(shell echo $(words $(SRCS) $(GNL_SRC) $(FT_PRINTF_SRC)))
+TOTAL_FILES := $(shell echo $(words $(SRCS) $(GNL_SRC) $(FT_PRINTF_SRC) $(LIBFT_SRC)))
 CURRENT_FILE = 1
 
 define progress

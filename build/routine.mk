@@ -18,6 +18,10 @@ $(OBJ_DIR)/%.o: $(FT_PRINTF_DIR)/%.c
 	@ $(CC) $(CFLAGS) $(INC) -c $< -o $@
 	@ echo "$(GENERATE) $(YELLOW)Compiling ft_printf: $< $(RESET)"
 
+$(OBJ_DIR)/%.o: $(LIBFT_DIR)/%.c
+	@ $(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@ echo "$(GENERATE) $(YELLOW)Compiling libft: $< $(RESET)"
+
 clean:
 	@ $(MAKE) -C $(MLX_DIR) clean
 	@ $(RM) $(OBJ_DIR)
