@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/01 18:39:50 by tkomeno          ###   ########.fr       */
+/*   Created: 2023/06/01 15:14:59 by hhagiwar          #+#    #+#             */
+/*   Updated: 2023/08/06 15:00:49 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+// #include "ft_printf.h"
 
-int	main(void)
-{
-	printf("Hello World!\n");
+// size_t	ft_strlen(const char *s)
+// {
+// 	int	len;
 
-	return (EXIT_SUCCESS);
-}
+// 	len = 0;
+// 	while (s[len] != '\0')
+// 	{
+// 		len++;
+// 	}
+// 	return (len);
+// }

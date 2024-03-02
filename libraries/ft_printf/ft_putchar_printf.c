@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_printf.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/01 18:39:50 by tkomeno          ###   ########.fr       */
+/*   Created: 2023/06/15 13:20:27 by hhagiwar          #+#    #+#             */
+/*   Updated: 2023/06/16 17:01:37 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "ft_printf.h"
 
-int	main(void)
+int	ft_putchar_printf(char chr)
 {
-	printf("Hello World!\n");
-
-	return (EXIT_SUCCESS);
+	write(1, &chr, 1);
+	return (1);
 }

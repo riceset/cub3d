@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_printf.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/01 18:39:50 by tkomeno          ###   ########.fr       */
+/*   Created: 2023/06/15 15:16:39 by hhagiwar          #+#    #+#             */
+/*   Updated: 2023/06/21 17:37:26 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "ft_printf.h"
 
-int	main(void)
+int	ft_putstr_printf(char *str)
 {
-	printf("Hello World!\n");
+	int	count;
 
-	return (EXIT_SUCCESS);
+	count = 0;
+	while (*str != '\0')
+	{
+		write(1, str, sizeof(*str));
+		count++;
+		str++;
+	}
+	return (count);
 }
