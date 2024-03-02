@@ -36,12 +36,30 @@ int	key_press(int keycode)
 	return (0);
 }
 
+void test_gnl(char **argv)
+{
+    char *line;
+	int fd;
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+    } else {
+        while ((line = get_next_line(fd)) != NULL) {
+            printf("%s", line);
+            free(line);
+        }
+        close(fd);
+    }
+}
+
 int main(int argc, char **argv)
 {
 	void	*mlx;
 	void	*mlx_win;
 	t_data	img;
 
+    if (argc == 2)
+		test_gnl(argv);
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
