@@ -70,19 +70,27 @@ RM = rm
 RMFLAGS = -f
 LIBC  = ar rc
 
+CHECK = \033[32m[✔]\033[0m
+REMOVE = \033[31m[✘]\033[0m
+GENERATE = \033[33m[➤]\033[0m
+BLUE = \033[1;34m
+YELLOW = \033[1;33m
+RESET = \033[0m
+
 .c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
+	@ $(CC) $(CFLAGS) -c $< -o $@
+	@ echo "$(GENERATE) $(YELLOW)Compiling libft: $< $(RESET)"
 
 ${NAME}: ${OBJS}
-	${LIBC} ${NAME} ${OBJS}
+	@ ${LIBC} ${NAME} ${OBJS}
 
 all: ${NAME}
 
 clean:
-	${RM} ${RMFLAGS} ${OBJS} ${OBJS_B}
+	@ ${RM} ${RMFLAGS} ${OBJS} ${OBJS_B}
     
 fclean: clean
-	${RM} ${RMFLAGS} ${NAME}
+	@ ${RM} ${RMFLAGS} ${NAME}
 re: fclean all
 
 bonus:
