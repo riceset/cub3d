@@ -2,6 +2,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ $(MAKE) -C $(MLX_DIR)
+	@ $(MAKE) -C $(LIBFT_DIR)
 	@ $(CC) $(CFLAGS) -o $@ $^ -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 	@ printf "$(CHECK) $(BLUE)Compiled $(NAME)!%-50.50s\n$(RESET)"
 
@@ -20,21 +21,16 @@ $(OBJ_DIR)/%.o: $(FT_PRINTF_DIR)/%.c
 
 clean:
 	@ $(MAKE) -C $(MLX_DIR) clean
+	@ $(MAKE) -C $(LIBFT_DIR) clean
 	@ $(RM) $(OBJ_DIR)
 	@ echo "$(REMOVE) $(BLUE)Removing $(NAME) object files $(RESET)"
 
 fclean:
 	@ $(MAKE) -C $(MLX_DIR) fclean
+	@ $(MAKE) -C $(LIBFT_DIR) fclean
 	@ $(RM) $(OBJ_DIR) $(NAME)
 	@ echo "$(REMOVE) $(BLUE)Removing $(NAME) object files and $(NAME) $(RESET)"
 
 re: fclean all
-
-debug: re
-
-address: re
-
-norm:
-	norminette sources includes libft
 
 .PHONY: all clean fclean re

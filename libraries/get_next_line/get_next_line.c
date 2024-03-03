@@ -77,7 +77,7 @@ char	*get_memo(int fd, char *memo)
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buf == NULL)
 		return (NULL);
-	while (done > 0 && ft_strchr(memo, '\n') == 0)
+	while (done > 0 && ft_strchr_gnl(memo, '\n') == 0)
 	{
 		done = read(fd, buf, BUFFER_SIZE);
 		if (done == -1)
