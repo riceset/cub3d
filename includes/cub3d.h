@@ -13,6 +13,7 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
+#include "../libraries/libft/libft.h"
 #include "../libraries/mlx/mlx.h"
 #include "../libraries/get_next_line/get_next_line.h"
 #include "../libraries/ft_printf/ft_printf.h"
@@ -23,12 +24,21 @@
 
 # define KEY_ESC 53
 
-typedef struct	s_data {
+typedef struct	s_mlx {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}				t_mlx;
+
+typedef struct s_data
+{
+ char **map;
+ int  p_x;
+ int  p_y;
+ int  w_map;
+ int  h_map;
+} t_data;
 
 #endif
