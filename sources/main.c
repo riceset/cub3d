@@ -17,6 +17,7 @@ int get_height(char *filename)
 	char *line;
 	int fd;
 	int height;
+	int is_map_started = 0;
 
 	fd = open(filename, O_RDONLY, 0);
 	if (fd == -1)
@@ -30,9 +31,14 @@ int get_height(char *filename)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		if (height == INT_MAX)
-			exit(EXIT_FAILURE);
-		height++;
+		char *temp = line;
+		while (*temp == ' ' || *temp == '\t')
+			temp++;
+		if (*temp != '\0' && (is_map_started || (*temp >= '0' && *temp <= '9')))
+		{
+			is_map_started = 1;
+			height++;
+		}
 		free(line);
 	}
 	close(fd);
@@ -46,20 +52,24 @@ t_data *init_data(char **argv)
 	t_data *data;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+	printf("\n");
+	
 	data = (t_data *)malloc(sizeof(t_data));
 	data->h_map = get_height(argv[1]);
 	printf("map_height: %d\n", data->h_map);
 	if (fd == -1)
 		perror("Error opening file");
-	else
-	{
-		while ((line = get_next_line(fd)) != NULL)
-		{
-			printf("%s", line);
-			free(line);
-		}
-		close(fd);
-	}
+	close(fd);
 	return data;
 }
 
@@ -109,11 +119,11 @@ int main(int argc, char **argv)
 {
 	t_data *data;
 
+	(void)data;
 	if (argc == 2)
 	{
 		data = init_data(argv);
 		start_game();
-		(void)data;
 	}
 	exit(EXIT_SUCCESS);
 }
