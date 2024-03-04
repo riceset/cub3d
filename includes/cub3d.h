@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/01 18:39:41 by tkomeno          ###   ########.fr       */
+/*   Updated: 2024/03/04 14:51:15 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ typedef struct s_data
  int  w_map;
  int  h_map;
 } t_data;
+
+t_data *init_data(char **argv);
 
 #endif
