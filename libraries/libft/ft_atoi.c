@@ -6,20 +6,11 @@
 /*   By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:19:26 by hhagiwar          #+#    #+#             */
-/*   Updated: 2023/07/18 11:58:02 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:28:51 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-int	is_space(int c)
-{
-	if ((9 <= c && c <= 13) || c == 32)
-	{
-		return (1);
-	}
-	return (0);
-}
 
 long	convert_int(const char *str, int minus)
 {
@@ -51,7 +42,7 @@ int	ft_atoi(const char *str)
 	int	minus;
 
 	minus = 1;
-	while (*str != '\0' && is_space(*str) == 1)
+	while (*str != '\0' && ft_isspace(*str) == 1)
 		str++;
 	if (*str == '-' || *str == '+')
 	{

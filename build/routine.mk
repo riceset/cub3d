@@ -3,7 +3,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@ $(MAKE) -C $(MLX_DIR)
 	@ $(MAKE) -C $(LIBFT_DIR)
-	@ $(CC) $(CFLAGS) -o $@ $^ -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	@ $(CC) $(CFLAGS) -o $@ $^ -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -L$(LIBFT_DIR) -lft
 	@ printf "$(CHECK) $(BLUE)Compiled $(NAME)!%-50.50s\n$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
