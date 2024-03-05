@@ -191,7 +191,7 @@ t_data *init_data(char **argv)
 		ft_exit("Memory allocation failed");
 	data->h_map = get_height(argv[1]);
 	data->w_map = get_width(argv[1]);
-	if (data->h_map < 1 || data->w_map < 1)
+	if (data->h_map < 9 || data->w_map < 7)
 		ft_exit("Map Error");
 	data->map = init_map(argv[1], data->h_map, data->w_map);
 	print_map(data->map, data->w_map);
