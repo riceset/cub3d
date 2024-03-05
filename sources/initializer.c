@@ -167,10 +167,24 @@ int **init_map(char *filename, int h_map, int w_map)
 	return map;
 }
 
+int extension_check(char *filename)
+{
+	int i;
+
+	i = 0;
+	while (filename[i] != '\0' && filename[i] != '.')
+		i++;
+	if ( i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && filename[i + 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
+		return SUCCESS;
+	return ERROR;
+}
+
 t_data *init_data(char **argv)
 {
 	t_data *data;
 
+	if (extension_check(argv[1]) == ERROR)
+        ft_exit("File extension must be .cub");
 	print_file(argv[1]);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)

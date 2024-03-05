@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 15:08:24 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/05 15:21:19 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define SUCCESS 0
+#define ERROR 1
 #define KEY_ESC 53
 
 typedef struct s_mlx
