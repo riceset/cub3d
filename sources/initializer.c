@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:08 by tkomeno          ###   ########.fr       */
+/*   Updated: 2024/03/05 18:35:56 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,41 @@ int	extension_check(char *filename)
 	return (ERROR);
 }
 
+t_player *init_player(t_data *data)
+{
+	t_player *player;
+	int i=0;
+	int j=0;
+	int player_count = 0;
+
+	player = (t_player *)malloc(sizeof(t_player));
+	if(!player)
+		ft_exit("Memory allocation failed");
+	player->plyr_x = -1;
+	player->plyr_y = -1;
+	while(i < data->h_map)
+	{
+		while(j < data->w_map)
+		{
+			if(data->map[i][j] == PLAYER_EAST || data->map[i][j] == PLAYER_WEST || data->map[i][j] == PLAYER_SOUTH || data->map[i][j] == PLAYER_NORTH)
+			{
+				player_count++;
+				if(player_count == 2)
+					ft_exit("Multiple player positions detected");
+				player->plyr_x = j;
+				player->plyr_y = i;
+				player->player_status = data->map[i][j];
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	if(player->plyr_x == -1 || player->plyr_y == -1)
+		ft_exit("not found player");
+	return player;
+}
+
 t_data	*init_data(char **argv)
 {
 	t_data	*data;
@@ -206,5 +241,6 @@ t_data	*init_data(char **argv)
 		ft_exit("Map Error");
 	data->map = init_map(argv[1], data->h_map, data->w_map);
 	print_map(data->map, data->w_map);
+	data->player = init_player(data);
 	return (data);
 }
