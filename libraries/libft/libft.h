@@ -6,7 +6,7 @@
 /*   By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:15:17 by hhagiwar          #+#    #+#             */
-/*   Updated: 2023/07/07 19:28:15 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:28:04 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_isascii(int c);
 int					ft_isalnum(int c);
-int					is_space(int c);
+int					ft_isspace(char c);
 size_t				ft_strlen(const char *s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);

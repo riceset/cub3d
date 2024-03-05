@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initializer.c                                  :+:      :+:    :+:   */
+/*   initializer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hhagiwar <hhagiwar@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tkomeno <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 14:28:54 by hhagiwar              #+#    #+#             */
-/*   Updated: 2024/03/04 14:28:55 by hhagiwar             ###   ########.fr       */
+/*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
+/*   Updated: 2024/03/05 16:31:08 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int num_cout(char *str)
+int	num_cout(char *str)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (*str != '\0')
 	{
-		if (ft_isdigit(*str) || *str == '\t' || *str == ' ')
+		if (ft_isdigit(*str) || ft_isspace(*str))
 		{
 			count++;
 			if (count == INT_MAX)
@@ -27,15 +27,15 @@ int num_cout(char *str)
 		}
 		str++;
 	}
-	return count;
+	return (count);
 }
 
-int get_width(char *filename)
+int	get_width(char *filename)
 {
-	int width;
-	int fd;
-	char *line;
-	int tmp;
+	int		width;
+	int		fd;
+	char	*line;
+	int		tmp;
 
 	fd = open(filename, O_RDONLY, 0);
 	if (fd == -1)
@@ -46,23 +46,25 @@ int get_width(char *filename)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		tmp = num_cout(line);
 		if (tmp > width)
 			width = tmp;
 		free(line);
 	}
 	close(fd);
-	return width;
+	return (width);
 }
 
-int get_height(char *filename)
+int	get_height(char *filename)
 {
-	char *line;
-	int fd;
-	int height;
-	int is_map_started = 0;
+	char	*line;
+	int		fd;
+	int		height;
+	int		is_map_started;
+	char	*temp;
 
+	is_map_started = 0;
 	fd = open(filename, O_RDONLY, 0);
 	if (fd == -1)
 		ft_exit("Error opening file");
@@ -71,9 +73,9 @@ int get_height(char *filename)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
-		char *temp = line;
-		while (*temp == ' ' || *temp == '\t')
+			break ;
+		temp = line;
+		while (ft_isspace(*temp))
 			temp++;
 		if (*temp != '\0' && (is_map_started || (*temp >= '0' && *temp <= '9')))
 		{
@@ -83,13 +85,15 @@ int get_height(char *filename)
 		free(line);
 	}
 	close(fd);
-	return height;
+	return (height);
 }
 
-int **allocate_map_memory(int h_map, int w_map)
+int	**allocate_map_memory(int h_map, int w_map)
 {
-	int i = 0;
-	int **map;
+	int	i;
+	int	**map;
+
+	i = 0;
 	map = (int **)malloc(sizeof(int *) * h_map);
 	if (!map)
 		ft_exit("Memory allocation failed");
@@ -100,20 +104,24 @@ int **allocate_map_memory(int h_map, int w_map)
 			ft_exit("Memory allocation failed");
 		i++;
 	}
-	return map;
+	return (map);
 }
 
-int open_file(char *filename)
+int	open_file(char *filename)
 {
-	int fd = open(filename, O_RDONLY);
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		ft_exit("Error opening file");
-	return fd;
+	return (fd);
 }
 
-void fill_map_row(int *map_row, char *line, int w_map)
+void	fill_map_row(int *map_row, char *line, int w_map)
 {
-	int j = 0;
+	int	j;
+
+	j = 0;
 	while ((line[j] != '\0' && line[j] != '\n') && j < w_map)
 	{
 		if (line[j] == ' ')
@@ -141,22 +149,24 @@ void fill_map_row(int *map_row, char *line, int w_map)
 	}
 }
 
-int **init_map(char *filename, int h_map, int w_map)
+int	**init_map(char *filename, int h_map, int w_map)
 {
-	int fd;
-	int **map;
-	char *line;
-	int i = 0;
+	int		fd;
+	int		**map;
+	char	*line;
+	int		i;
+	char	*temp;
 
+	i = 0;
 	map = allocate_map_memory(h_map, w_map);
 	fd = open_file(filename);
-
 	while ((line = get_next_line(fd)) != NULL && i < h_map)
 	{
-		char *temp = ft_strdup(line);
-		while (*temp == ' ' || *temp == '\t')
+		temp = ft_strdup(line);
+		while (ft_isspace(*temp))
 			temp++;
-		if ((line[0] != '\0' || line[0] != '\n') && (*temp >= '0' && *temp <= '9'))
+		if ((line[0] != '\0' || line[0] != '\n') && (*temp >= '0'
+				&& *temp <= '9'))
 		{
 			fill_map_row(map[i], line, w_map);
 			i++;
@@ -164,27 +174,28 @@ int **init_map(char *filename, int h_map, int w_map)
 		free(line);
 	}
 	close(fd);
-	return map;
+	return (map);
 }
 
-int extension_check(char *filename)
+int	extension_check(char *filename)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (filename[i] != '\0' && filename[i] != '.')
 		i++;
-	if ( i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && filename[i + 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
-		return SUCCESS;
-	return ERROR;
+	if (i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && filename[i
+		+ 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
+		return (SUCCESS);
+	return (ERROR);
 }
 
-t_data *init_data(char **argv)
+t_data	*init_data(char **argv)
 {
-	t_data *data;
+	t_data	*data;
 
 	if (extension_check(argv[1]) == ERROR)
-        ft_exit("File extension must be .cub");
+		ft_exit("File extension must be .cub");
 	print_file(argv[1]);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
@@ -195,5 +206,5 @@ t_data *init_data(char **argv)
 		ft_exit("Map Error");
 	data->map = init_map(argv[1], data->h_map, data->w_map);
 	print_map(data->map, data->w_map);
-	return data;
+	return (data);
 }

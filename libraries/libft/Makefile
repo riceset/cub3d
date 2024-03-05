@@ -6,7 +6,7 @@
 #    By: hhagiwar <hhagiwar@student.42Tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 15:17:46 by hhagiwar          #+#    #+#              #
-#    Updated: 2023/06/15 17:31:07 by hhagiwar         ###   ########.fr        #
+#    Updated: 2024/03/05 16:29:07 by tkomeno          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = libft.a
 SRCS = ft_isalpha.c \
     ft_isdigit.c \
     ft_isalnum.c \
+    ft_isspace.c \
     ft_isascii.c \
     ft_isprint.c \
     ft_strlen.c \
