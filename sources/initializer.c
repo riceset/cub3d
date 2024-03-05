@@ -130,7 +130,7 @@ void fill_map_row(int *map_row, char *line, int w_map)
 			map_row[j] = PLAYER_EAST;
 		else if (line[j] == 'W')
 			map_row[j] = PLAYER_WEST;
-		else
+		else if (line[j] == ' ')
 			map_row[j] = FORBIDDEN_SPACE;
 		j++;
 	}

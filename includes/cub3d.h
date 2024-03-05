@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 15:21:19 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/05 15:56:35 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct s_data
 
 typedef enum e_map_element
 {
-	FORBIDDEN_SPACE,
-	WALL,
 	FREE_SPACE,
+	WALL,
+	FORBIDDEN_SPACE,
 	PLAYER_NORTH,
 	PLAYER_SOUTH,
 	PLAYER_EAST,
