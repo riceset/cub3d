@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/04 14:51:43 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/05 14:08:57 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,9 @@ int main(int argc, char **argv)
 		start_game();
 	}
 	exit(EXIT_SUCCESS);
+}
+
+__attribute__((destructor)) static void destructor()
+{
+	system("leaks -q cub3d");
 }

@@ -12,7 +12,13 @@
 
 #include "cub3d.h"
 
-int numcout(char *str)
+void ft_exit(char *err_msg)
+{
+	perror(err_msg);
+	exit(EXIT_FAILURE);
+}
+
+int num_cout(char *str)
 {
 	int count;
 
@@ -38,6 +44,8 @@ int get_width(char *filename)
 	int tmp;
 
 	fd = open(filename, O_RDONLY, 0);
+	if (fd == -1)
+		ft_exit("Error opening file");
 	tmp = -1;
 	width = 0;
 	while (1)
@@ -45,8 +53,8 @@ int get_width(char *filename)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		tmp = numcout(line);
-		if(tmp > width)
+		tmp = num_cout(line);
+		if (tmp > width)
 			width = tmp;
 		free(line);
 	}
@@ -63,10 +71,7 @@ int get_height(char *filename)
 
 	fd = open(filename, O_RDONLY, 0);
 	if (fd == -1)
-	{
-		perror("Error opening file");
-		exit(EXIT_FAILURE);
-	}
+		ft_exit("Error opening file");
 	height = 0;
 	while (1)
 	{
@@ -87,33 +92,109 @@ int get_height(char *filename)
 	return height;
 }
 
-t_data *init_data(char **argv)
+char **allocate_map_memory(int h_map, int w_map)
 {
-	char *line;
-	int fd;
-	t_data *data;
-
-	(void)ft_isdigit(**argv);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
+	int i = 0;
+	char **map;
+	map = (char **)malloc(sizeof(char *) * h_map);
+	if (!map)
+		ft_exit("Memory allocation failed");
+	while (i < h_map)
 	{
-		perror("Error opening file");
-		exit(EXIT_FAILURE);
+		map[i] = (char *)malloc(sizeof(char) * (w_map + 1));
+		if (!map[i])
+			ft_exit("Memory allocation failed");
+		i++;
 	}
-	while ((line = get_next_line(fd)) != NULL)
+	return map;
+}
+
+char **init_map(char *filename, int h_map, int w_map)
+{
+	int fd;
+	char **map;
+	char *line;
+	int i = 0;
+	int is_map_started = 0;
+
+	map = allocate_map_memory(h_map, w_map);
+	i = 0;
+	if ((fd = open(filename, O_RDONLY)) == -1)
+		ft_exit("Error opening file");
+	while ((line = get_next_line(fd)) != NULL && i < h_map)
 	{
-		printf("%s", line);
+		int j = 0;
+		char *temp = ft_strdup(line);
+		while (*temp == ' ' || *temp == '\t')
+			temp++;
+		if ((line[j] != '\0' || line[j] != '\n') && (is_map_started || (*temp >= '0' && *temp <= '9')))
+		{
+			is_map_started = 1;
+			while ((line[j] != '\0' && line[j] != '\n') && j < w_map)
+			{
+				map[i][j] = line[j];
+				j++;
+			}
+			while (j < w_map)
+			{
+				map[i][j] = ' ';
+				j++;
+			}
+			map[i][j] = '\0';
+			i++;
+		}
 		free(line);
 	}
-	printf("\n");
+	map[i] = NULL;
+	i = 0;
+	close(fd);
+	return map;
+}
 
+void print_file(char *filename)
+{
+    char *line;
+    int fd;
+    int line_number = 1;
+    printf("--------- Start of %s ---------\n", filename);
+    fd = open(filename, O_RDONLY);
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%d: %s", line_number, line);
+        free(line);
+        line_number++;
+    }
+    printf("\n--------- End of %s ---------\n\n", filename);
+    close(fd);
+}
+
+
+void print_map(char **map)
+{
+    int i = 0;
+    printf("--------- Start of Map ---------\n");
+    while(map[i] != NULL)
+    {
+        printf("%s\n", map[i]);
+        i++;
+    }
+    printf("--------- End of Map ---------\n\n");
+}
+
+
+t_data *init_data(char **argv)
+{
+	t_data *data;
+
+	print_file(argv[1]);
 	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_exit("Memory allocation failed");
 	data->h_map = get_height(argv[1]);
 	data->w_map = get_width(argv[1]);
-	printf("map_height: %d\n", data->h_map);
-	printf("map_width: %d\n", data->w_map);
-	if (fd == -1)
-		perror("Error opening file");
-	close(fd);
+	if(data->h_map < 1 || data->w_map < 1)
+		ft_exit("Map Error");
+	data->map = init_map(argv[1], data->h_map, data->w_map);
+	print_map(data->map);
 	return data;
 }
