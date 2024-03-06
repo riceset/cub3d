@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 18:35:56 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/06 13:48:18 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ void	fill_map_row(int *map_row, char *line, int w_map)
 			map_row[j] = PLAYER_WEST;
 		else if (line[j] == ' ')
 			map_row[j] = FORBIDDEN_SPACE;
+		else
+			ft_exit("Map Error");
 		j++;
 	}
 	while (j < w_map)
@@ -177,19 +179,6 @@ int	**init_map(char *filename, int h_map, int w_map)
 	return (map);
 }
 
-int	extension_check(char *filename)
-{
-	int	i;
-
-	i = 0;
-	while (filename[i] != '\0' && filename[i] != '.')
-		i++;
-	if (i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && filename[i
-		+ 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
-		return (SUCCESS);
-	return (ERROR);
-}
-
 t_player *init_player(t_data *data)
 {
 	t_player *player;
@@ -210,7 +199,7 @@ t_player *init_player(t_data *data)
 			{
 				player_count++;
 				if(player_count == 2)
-					ft_exit("Multiple player positions detected");
+					ft_exit("Multiple player detected");
 				player->plyr_x = j;
 				player->plyr_y = i;
 				player->player_status = data->map[i][j];
@@ -225,12 +214,35 @@ t_player *init_player(t_data *data)
 	return player;
 }
 
+void flood_fill(int **map, int x, int y, int h_map, int w_map, int *status) {
+    if (x < 0 || x >= w_map || y < 0 || y >= h_map || map[y][x] == FORBIDDEN_SPACE) {
+        *status = 1;
+        return;
+    }
+    if (map[y][x] == -1 || map[y][x] == WALL) {
+        return;
+    }
+
+    map[y][x] = -1;
+
+    flood_fill(map, x + 1, y, h_map, w_map, status);
+    flood_fill(map, x - 1, y, h_map, w_map, status);
+    flood_fill(map, x, y + 1, h_map, w_map, status);
+    flood_fill(map, x, y - 1, h_map, w_map, status);
+}
+
+int validate_map(t_data *data) {
+    int status = 0;
+
+    flood_fill(data->map, data->player->plyr_x, data->player->plyr_y, data->h_map, data->w_map, &status);
+    return status;
+}
+
+
 t_data	*init_data(char **argv)
 {
 	t_data	*data;
 
-	if (extension_check(argv[1]) == ERROR)
-		ft_exit("File extension must be .cub");
 	print_file(argv[1]);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
@@ -242,5 +254,6 @@ t_data	*init_data(char **argv)
 	data->map = init_map(argv[1], data->h_map, data->w_map);
 	print_map(data->map, data->w_map);
 	data->player = init_player(data);
+	printf("flood_fill:%d\n", validate_map(data));
 	return (data);
 }

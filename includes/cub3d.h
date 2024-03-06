@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 18:28:12 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/06 13:48:00 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ t_data *init_data(char **argv);
 void ft_exit(char *err_msg);
 void print_file(char *filename);
 void print_map(int **map, int w_map);
+int	extension_check(char *filename);
 
 #endif
