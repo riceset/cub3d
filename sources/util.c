@@ -6,18 +6,42 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:07:17 by hiro              #+#    #+#             */
-/*   Updated: 2024/03/06 13:48:23 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/06 14:01:28 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void ft_exit(char *err_msg)
-{
-	perror(err_msg);
-	exit(EXIT_FAILURE);
+void free_map(int **map, int height) {
+    int i;
+
+    if (map) {
+        for (i = 0; i < height; i++) {
+            if (map[i]) {
+                free(map[i]);
+            }
+        }
+        free(map);
+    }
 }
 
+void ft_exit(char *err_msg, t_data *data) {
+    if (err_msg) {
+        perror(err_msg);
+    }
+
+    if (data) {
+        if (data->map) {
+            free_map(data->map, data->h_map);
+        }
+        if (data->player) {
+            free(data->player);
+        }
+        free(data);
+    }
+
+    exit(EXIT_FAILURE);
+}
 int	extension_check(char *filename)
 {
 	int	i;

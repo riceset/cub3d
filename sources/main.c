@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/06 13:47:42 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/06 14:02:20 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int main(int argc, char **argv)
 	if (argc == 2)
 	{
 		if (extension_check(argv[1]) == ERROR)
-			ft_exit("File extension must be .cub");
+			ft_exit("File extension must be .cub", NULL);
 		data = init_data(argv);
 		start_game();
 	}
 	else
-		ft_exit("Error: Invalid command line arguments. \nUsage: ./cub3D <path_to_map_file.cub>");
+		ft_exit("Error: Invalid command line arguments. \nUsage: ./cub3D <path_to_map_file.cub>", NULL);
 	exit(EXIT_SUCCESS);
 }
 
