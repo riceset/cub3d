@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/05 15:56:35 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/06 14:01:10 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct s_mlx
 	int endian;
 } t_mlx;
 
+typedef struct s_player
+{
+	int plyr_x;
+	int plyr_y;
+	int player_status;
+} t_player;
+
 typedef struct s_data
 {
 	int **map;
@@ -42,6 +49,7 @@ typedef struct s_data
 	int p_y;
 	int w_map;
 	int h_map;
+	t_player *player;
 } t_data;
 
 typedef enum e_map_element
@@ -56,8 +64,9 @@ typedef enum e_map_element
 } t_map_element;
 
 t_data *init_data(char **argv);
-void ft_exit(char *err_msg);
+void ft_exit(char *err_msg, t_data *data);
 void print_file(char *filename);
 void print_map(int **map, int w_map);
+int	extension_check(char *filename);
 
 #endif
