@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/06 14:02:20 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/12 17:52:17 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,75 @@ int key_press(int keycode)
 	return (0);
 }
 
-void start_game()
+void draw_minimap(t_data *data, t_mlx img)
 {
-	t_mlx img;
-	void *mlx;
-	void *mlx_win;
+    int x;
+	int y;
+	int i;
+	int j;
+	int start_x;
+	int start_y;
+	int end_x;
+	int end_y;
+	
+	
+	y = 0;
+    while (y < data->h_map)
+    {
+        x = 0;
+        while (x < data->w_map)
+        {
+            i = 0;
+            while (i <= TILE_SIZE)
+            {
+                my_mlx_pixel_put(&img, x * TILE_SIZE + i, y * TILE_SIZE, GREY);
+                my_mlx_pixel_put(&img, x * TILE_SIZE, y * TILE_SIZE + i, GREY);
+                my_mlx_pixel_put(&img, (x + 1) * TILE_SIZE - 1, y * TILE_SIZE + i, GREY);
+                my_mlx_pixel_put(&img, x * TILE_SIZE + i, (y + 1) * TILE_SIZE - 1, GREY);
+                i++;
+            }
+            if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST)
+            {
+                start_x = x * TILE_SIZE + TILE_SIZE / 3;
+                start_y = y * TILE_SIZE + TILE_SIZE / 3;
+                end_x = start_x + TILE_SIZE / 3;
+                end_y = start_y + TILE_SIZE / 3;
+				i = start_y;
+				while(i < end_y)
+				{
+					j = start_x;
+					while(j < end_x)
+					{
+                        my_mlx_pixel_put(&img, j, i, YELLOW);
+						j++;
+					}
+					i++;
+				}
+            }
+            x++;
+        }
+        y++;
+    }
+}
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								 &img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
+void start_game(t_data *data)
+{
+    t_mlx img;
+    void *mlx;
+    void *mlx_win;
+    mlx = mlx_init();
+    mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Cub3D");
+    img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	draw_minimap(data, img);
+	(void)data;
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_key_hook(mlx_win, key_press, NULL);
 	mlx_hook(mlx_win, 17, 0, close_window, NULL);
 	mlx_loop(mlx);
 }
+
+
 
 int main(int argc, char **argv)
 {
@@ -64,7 +116,7 @@ int main(int argc, char **argv)
 		if (extension_check(argv[1]) == ERROR)
 			ft_exit("File extension must be .cub", NULL);
 		data = init_data(argv);
-		start_game();
+		start_game(data);
 	}
 	else
 		ft_exit("Error: Invalid command line arguments. \nUsage: ./cub3D <path_to_map_file.cub>", NULL);

@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/06 14:01:10 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/12 19:40:14 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@
 #define SUCCESS 0
 #define ERROR 1
 #define KEY_ESC 53
+
+#define WHITE 0xFFFFFF
+#define BLACK 0x000000
+#define GREY 0x808080
+#define RED 0xFF0000
+#define ASH 0xB2BEB5
+#define YELLOW 0xFFFF00
+
+#define TILE_SIZE 30
+
+#define WIDTH 1200
+#define HEIGHT 600
+
 
 typedef struct s_mlx
 {
