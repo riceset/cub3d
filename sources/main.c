@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/12 17:52:17 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/12 20:02:53 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void draw_minimap(t_data *data, t_mlx img)
 	int start_y;
 	int end_x;
 	int end_y;
-	
+	int color;	
 	
 	y = 0;
     while (y < data->h_map)
@@ -54,6 +54,29 @@ void draw_minimap(t_data *data, t_mlx img)
         x = 0;
         while (x < data->w_map)
         {
+			if (data->map[y][x] == WALL || data->map[y][x] == FORBIDDEN_SPACE)
+			{
+
+				if (data->map[y][x] == WALL)
+					color = WHITE;
+				else if(data->map[y][x] == FORBIDDEN_SPACE)
+					color = RED;
+                start_x = x * TILE_SIZE;
+                start_y = y * TILE_SIZE;
+                end_x = start_x + TILE_SIZE;
+                end_y = start_y + TILE_SIZE;
+				i = start_y;
+				while(i < end_y)
+				{
+					j = start_x;
+					while(j < end_x)
+					{
+                        my_mlx_pixel_put(&img, j, i, color);
+						j++;
+					}
+					i++;
+				}
+			}
             i = 0;
             while (i <= TILE_SIZE)
             {
@@ -65,10 +88,10 @@ void draw_minimap(t_data *data, t_mlx img)
             }
             if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST)
             {
-                start_x = x * TILE_SIZE + TILE_SIZE / 3;
-                start_y = y * TILE_SIZE + TILE_SIZE / 3;
-                end_x = start_x + TILE_SIZE / 3;
-                end_y = start_y + TILE_SIZE / 3;
+                start_x = x * TILE_SIZE + TILE_SIZE * 3 / 8;
+                start_y = y * TILE_SIZE + TILE_SIZE * 3 / 8;
+                end_x = start_x + TILE_SIZE * 2 / 7;
+                end_y = start_y + TILE_SIZE * 2 / 7;
 				i = start_y;
 				while(i < end_y)
 				{
