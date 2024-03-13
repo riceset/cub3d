@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/06 16:07:59 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/13 17:44:34 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ t_data *init_data(char **argv)
 	data->player = init_player(data);
 	print_map(data->map, data->w_map);
 
-	printf("flood_fill:%d\n", validate_map(data));
+	if(validate_map(data))
+		ft_exit("Map Error", data);
 	return (data);
 }
