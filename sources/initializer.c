@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/13 18:04:05 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/14 18:16:05 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ t_player *init_player(t_data *data)
 		ft_exit("Memory allocation failed", data);
 	player->plyr_x = -1;
 	player->plyr_y = -1;
+	player->fov_rd = M_PI / 3;
 	while (i < data->h_map)
 	{
 		while (j < data->w_map)

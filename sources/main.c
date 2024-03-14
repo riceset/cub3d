@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/14 18:07:05 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/14 18:17:54 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,12 @@ void draw_minimap(t_data *data, t_mlx img)
 				start_y = y * TILE_SIZE + TILE_SIZE / 2;
 				end_x = start_x + (int)(20 * cos(data->player->angle));
 				end_y = start_y - (int)(20 * sin(data->player->angle));
+				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
+				end_x = start_x + (int)(20 * cos(data->player->angle - data->player->fov_rd / 2));
+				end_y = start_y - (int)(20 * sin(data->player->angle - data->player->fov_rd / 2));				
+				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
+				end_x = start_x + (int)(20 * cos(data->player->angle + data->player->fov_rd / 2));
+				end_y = start_y - (int)(20 * sin(data->player->angle + data->player->fov_rd / 2));				
 				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
 			}
 			x++;
