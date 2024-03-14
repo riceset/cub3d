@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/13 17:20:51 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/14 18:42:30 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@
 
 #define SUCCESS 0
 #define ERROR 1
+
 #define KEY_ESC 53
+#define KEY_A 0
+#define KEY_S 1
+#define KEY_D 2
+#define KEY_W 13
 
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
