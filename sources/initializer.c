@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/13 17:44:34 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/13 18:04:05 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,18 @@ int **init_map(char *filename, int h_map, int w_map, t_data *data)
 	return (map);
 }
 
+double init_angle(t_player *player)
+{
+	if(player->player_status == PLAYER_EAST)
+		return 0;
+	else if(player->player_status == PLAYER_NORTH)
+		return M_PI * 1 / 2;
+	else if(player->player_status == PLAYER_WEST)
+		return M_PI;
+	else
+		return M_PI * 3 / 2;
+}
+
 t_player *init_player(t_data *data)
 {
 	t_player *player;
@@ -216,6 +228,8 @@ t_player *init_player(t_data *data)
 	}
 	if (player->plyr_x == -1 || player->plyr_y == -1)
 		ft_exit("not found player", data);
+	else
+		player->angle = init_angle(player);
 	return player;
 }
 
@@ -310,7 +324,6 @@ t_data *init_data(char **argv)
 	print_map(data->map, data->w_map);
 	data->player = init_player(data);
 	print_map(data->map, data->w_map);
-
 	if(validate_map(data))
 		ft_exit("Map Error", data);
 	return (data);

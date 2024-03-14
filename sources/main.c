@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/12 20:02:53 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/14 18:07:05 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,35 @@ int key_press(int keycode)
 	return (0);
 }
 
+void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color)
+{
+	float x_step;
+	float y_step;
+	int steps;
+	float x;
+	float y;
+	int i;
+	
+	x_step = end_x - start_x;
+	y_step = end_y - start_y;
+	steps = (int)fmaxf(fabsf(x_step), fabsf(y_step));
+	x_step /= steps;
+	y_step /= steps;
+	x = start_x;
+	y = start_y;
+	i = 0;
+	while (i <= steps)
+	{
+		my_mlx_pixel_put(img, round(x), round(y), color);
+		x += x_step;
+		y += y_step;
+		i++;
+	}
+}
+
 void draw_minimap(t_data *data, t_mlx img)
 {
-    int x;
+	int x;
 	int y;
 	int i;
 	int j;
@@ -46,79 +72,83 @@ void draw_minimap(t_data *data, t_mlx img)
 	int start_y;
 	int end_x;
 	int end_y;
-	int color;	
-	
+	int color;
+
 	y = 0;
-    while (y < data->h_map)
-    {
-        x = 0;
-        while (x < data->w_map)
-        {
+	while (y < data->h_map)
+	{
+		x = 0;
+		while (x < data->w_map)
+		{
 			if (data->map[y][x] == WALL || data->map[y][x] == FORBIDDEN_SPACE)
 			{
-
 				if (data->map[y][x] == WALL)
 					color = WHITE;
-				else if(data->map[y][x] == FORBIDDEN_SPACE)
+				else if (data->map[y][x] == FORBIDDEN_SPACE)
 					color = RED;
-                start_x = x * TILE_SIZE;
-                start_y = y * TILE_SIZE;
-                end_x = start_x + TILE_SIZE;
-                end_y = start_y + TILE_SIZE;
+				start_x = x * TILE_SIZE;
+				start_y = y * TILE_SIZE;
+				end_x = start_x + TILE_SIZE;
+				end_y = start_y + TILE_SIZE;
 				i = start_y;
-				while(i < end_y)
+				while (i < end_y)
 				{
 					j = start_x;
-					while(j < end_x)
+					while (j < end_x)
 					{
-                        my_mlx_pixel_put(&img, j, i, color);
+						my_mlx_pixel_put(&img, j, i, color);
 						j++;
 					}
 					i++;
 				}
 			}
-            i = 0;
-            while (i <= TILE_SIZE)
-            {
-                my_mlx_pixel_put(&img, x * TILE_SIZE + i, y * TILE_SIZE, GREY);
-                my_mlx_pixel_put(&img, x * TILE_SIZE, y * TILE_SIZE + i, GREY);
-                my_mlx_pixel_put(&img, (x + 1) * TILE_SIZE - 1, y * TILE_SIZE + i, GREY);
-                my_mlx_pixel_put(&img, x * TILE_SIZE + i, (y + 1) * TILE_SIZE - 1, GREY);
-                i++;
-            }
-            if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST)
-            {
-                start_x = x * TILE_SIZE + TILE_SIZE * 3 / 8;
-                start_y = y * TILE_SIZE + TILE_SIZE * 3 / 8;
-                end_x = start_x + TILE_SIZE * 2 / 7;
-                end_y = start_y + TILE_SIZE * 2 / 7;
+			i = 0;
+			while (i <= TILE_SIZE)
+			{
+				my_mlx_pixel_put(&img, x * TILE_SIZE + i, y * TILE_SIZE, GREY);
+				my_mlx_pixel_put(&img, x * TILE_SIZE, y * TILE_SIZE + i, GREY);
+				my_mlx_pixel_put(&img, (x + 1) * TILE_SIZE - 1, y * TILE_SIZE + i, GREY);
+				my_mlx_pixel_put(&img, x * TILE_SIZE + i, (y + 1) * TILE_SIZE - 1, GREY);
+				i++;
+			}
+			if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST)
+			{
+				start_x = x * TILE_SIZE + TILE_SIZE * 3 / 8;
+				start_y = y * TILE_SIZE + TILE_SIZE * 3 / 8;
+				end_x = start_x + TILE_SIZE * 2 / 7;
+				end_y = start_y + TILE_SIZE * 2 / 7;
 				i = start_y;
-				while(i < end_y)
+				while (i < end_y)
 				{
 					j = start_x;
-					while(j < end_x)
+					while (j < end_x)
 					{
-                        my_mlx_pixel_put(&img, j, i, YELLOW);
+						my_mlx_pixel_put(&img, j, i, YELLOW);
 						j++;
 					}
 					i++;
 				}
-            }
-            x++;
-        }
-        y++;
-    }
+				start_x = x * TILE_SIZE + TILE_SIZE / 2;
+				start_y = y * TILE_SIZE + TILE_SIZE / 2;
+				end_x = start_x + (int)(20 * cos(data->player->angle));
+				end_y = start_y - (int)(20 * sin(data->player->angle));
+				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
+			}
+			x++;
+		}
+		y++;
+	}
 }
 
 void start_game(t_data *data)
 {
-    t_mlx img;
-    void *mlx;
-    void *mlx_win;
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Cub3D");
-    img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	t_mlx img;
+	void *mlx;
+	void *mlx_win;
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Cub3D");
+	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	draw_minimap(data, img);
 	(void)data;
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
@@ -126,8 +156,6 @@ void start_game(t_data *data)
 	mlx_hook(mlx_win, 17, 0, close_window, NULL);
 	mlx_loop(mlx);
 }
-
-
 
 int main(int argc, char **argv)
 {
@@ -148,7 +176,7 @@ int main(int argc, char **argv)
 
 __attribute__((destructor)) static void destructor()
 {
-    printf("\n--------- destructor ---------\n\n");
+	printf("\n--------- destructor ---------\n\n");
 	system("leaks -q cub3d");
-    printf("\n--------- End of destructor ---------\n\n");
+	printf("\n--------- End of destructor ---------\n\n");
 }

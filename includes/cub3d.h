@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/12 19:40:14 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/13 17:20:51 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #define RED 0xFF0000
 #define ASH 0xB2BEB5
 #define YELLOW 0xFFFF00
+#define GREEN 0x00B16B
 
 #define TILE_SIZE 30
 
@@ -52,6 +53,8 @@ typedef struct s_player
 {
 	int plyr_x;
 	int plyr_y;
+	double angle;
+	float fov_rd;
 	int player_status;
 } t_player;
 
