@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:48 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/14 18:17:54 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/14 18:30:27 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,89 +62,94 @@ void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int c
 	}
 }
 
-void draw_minimap(t_data *data, t_mlx img)
-{
-	int x;
-	int y;
-	int i;
-	int j;
-	int start_x;
-	int start_y;
-	int end_x;
-	int end_y;
-	int color;
-
-	y = 0;
-	while (y < data->h_map)
-	{
-		x = 0;
-		while (x < data->w_map)
-		{
-			if (data->map[y][x] == WALL || data->map[y][x] == FORBIDDEN_SPACE)
-			{
-				if (data->map[y][x] == WALL)
-					color = WHITE;
-				else if (data->map[y][x] == FORBIDDEN_SPACE)
-					color = RED;
-				start_x = x * TILE_SIZE;
-				start_y = y * TILE_SIZE;
-				end_x = start_x + TILE_SIZE;
-				end_y = start_y + TILE_SIZE;
-				i = start_y;
-				while (i < end_y)
-				{
-					j = start_x;
-					while (j < end_x)
-					{
-						my_mlx_pixel_put(&img, j, i, color);
-						j++;
-					}
-					i++;
-				}
-			}
-			i = 0;
-			while (i <= TILE_SIZE)
-			{
-				my_mlx_pixel_put(&img, x * TILE_SIZE + i, y * TILE_SIZE, GREY);
-				my_mlx_pixel_put(&img, x * TILE_SIZE, y * TILE_SIZE + i, GREY);
-				my_mlx_pixel_put(&img, (x + 1) * TILE_SIZE - 1, y * TILE_SIZE + i, GREY);
-				my_mlx_pixel_put(&img, x * TILE_SIZE + i, (y + 1) * TILE_SIZE - 1, GREY);
-				i++;
-			}
-			if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST)
-			{
-				start_x = x * TILE_SIZE + TILE_SIZE * 3 / 8;
-				start_y = y * TILE_SIZE + TILE_SIZE * 3 / 8;
-				end_x = start_x + TILE_SIZE * 2 / 7;
-				end_y = start_y + TILE_SIZE * 2 / 7;
-				i = start_y;
-				while (i < end_y)
-				{
-					j = start_x;
-					while (j < end_x)
-					{
-						my_mlx_pixel_put(&img, j, i, YELLOW);
-						j++;
-					}
-					i++;
-				}
-				start_x = x * TILE_SIZE + TILE_SIZE / 2;
-				start_y = y * TILE_SIZE + TILE_SIZE / 2;
-				end_x = start_x + (int)(20 * cos(data->player->angle));
-				end_y = start_y - (int)(20 * sin(data->player->angle));
-				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
-				end_x = start_x + (int)(20 * cos(data->player->angle - data->player->fov_rd / 2));
-				end_y = start_y - (int)(20 * sin(data->player->angle - data->player->fov_rd / 2));				
-				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
-				end_x = start_x + (int)(20 * cos(data->player->angle + data->player->fov_rd / 2));
-				end_y = start_y - (int)(20 * sin(data->player->angle + data->player->fov_rd / 2));				
-				draw_line(&img, start_x, start_y, end_x, end_y, GREEN);
-			}
-			x++;
-		}
-		y++;
-	}
+void draw_square(t_mlx *img, int start_x, int start_y, int color, int size) {
+    int end_x;
+    int end_y;
+    int i;
+    int j;
+    
+	end_x = start_x + size;
+	end_y = start_y + size;
+	i = start_y;
+    while (i < end_y) {
+        j = start_x;
+        while (j < end_x) {
+            my_mlx_pixel_put(img, j, i, color);
+            j++;
+        }
+        i++;
+    }
 }
+
+void draw_grid(t_mlx *img, int x, int y, int color, int size) {
+    int i = 0;
+    while (i <= size) {
+        my_mlx_pixel_put(img, x * size + i, y * size, color);
+        my_mlx_pixel_put(img, x * size, y * size + i, color);
+        my_mlx_pixel_put(img, (x + 1) * size - 1, y * size + i, color);
+        my_mlx_pixel_put(img, x * size + i, (y + 1) * size - 1, color);
+        i++;
+    }
+}
+
+void draw_player(t_mlx *img, t_data *data, int x, int y) {
+    int start_x = x * TILE_SIZE + TILE_SIZE * 3 / 8;
+    int start_y = y * TILE_SIZE + TILE_SIZE * 3 / 8;
+    int end_x = start_x + TILE_SIZE * 2 / 7;
+    int end_y = start_y + TILE_SIZE * 2 / 7;
+    int i = start_y;
+    int j;
+
+    while (i < end_y) {
+        j = start_x;
+        while (j < end_x) {
+            my_mlx_pixel_put(img, j, i, YELLOW);
+            j++;
+        }
+        i++;
+    }
+    start_x = x * TILE_SIZE + TILE_SIZE / 2;
+    start_y = y * TILE_SIZE + TILE_SIZE / 2;
+    end_x = start_x + (int)(20 * cos(data->player->angle));
+    end_y = start_y - (int)(20 * sin(data->player->angle));
+    draw_line(img, start_x, start_y, end_x, end_y, GREEN);
+
+    end_x = start_x + (int)(20 * cos(data->player->angle - data->player->fov_rd / 2));
+    end_y = start_y - (int)(20 * sin(data->player->angle - data->player->fov_rd / 2));                
+    draw_line(img, start_x, start_y, end_x, end_y, GREEN);
+
+    end_x = start_x + (int)(20 * cos(data->player->angle + data->player->fov_rd / 2));
+    end_y = start_y - (int)(20 * sin(data->player->angle + data->player->fov_rd / 2));                
+    draw_line(img, start_x, start_y, end_x, end_y, GREEN);
+}
+
+
+void draw_minimap(t_data *data, t_mlx img) {
+    int x = 0;
+    int y = 0;
+    int color;
+
+    while (y < data->h_map) {
+        x = 0;
+        while (x < data->w_map) {
+            if (data->map[y][x] == WALL || data->map[y][x] == FORBIDDEN_SPACE){
+                if (data->map[y][x] == WALL)
+                    color = WHITE;
+                else if (data->map[y][x] == FORBIDDEN_SPACE)
+                    color = RED;
+                draw_square(&img, x * TILE_SIZE, y * TILE_SIZE, color, TILE_SIZE);
+            }
+            draw_grid(&img, x, y, GREY, TILE_SIZE);
+
+            if (data->map[y][x] >= PLAYER_NORTH && data->map[y][x] <= PLAYER_WEST) {
+                draw_player(&img, data, x, y);
+            }
+            x++;
+        }
+        y++;
+    }
+}
+
 
 void start_game(t_data *data)
 {
