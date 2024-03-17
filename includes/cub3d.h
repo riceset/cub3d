@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/14 18:42:30 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/17 21:09:58 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,32 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+// Operation status codes
 #define SUCCESS 0
 #define ERROR 1
 
+// Event types
+#define ON_KEYDOWN 2
+
+// Event masks
+#define KEY_PRESS_MASK (1L<<0)
+
+// Keyboard key codes
 #define KEY_ESC 53
 #define KEY_A 0
 #define KEY_S 1
 #define KEY_D 2
 #define KEY_W 13
 
+// Game settings
+#define ROTATION_SPEED 0.045
+#define TILE_SIZE 30
+
+// Window dimensions
+#define WIDTH 1200
+#define HEIGHT 600
+
+// Color codes
 #define WHITE 0xFFFFFF
 #define BLACK 0x000000
 #define GREY 0x808080
@@ -39,16 +56,12 @@
 #define YELLOW 0xFFFF00
 #define GREEN 0x00B16B
 
-#define TILE_SIZE 30
-
-#define WIDTH 1200
-#define HEIGHT 600
-
-
 typedef struct s_mlx
 {
 	void *img;
 	char *addr;
+	void *mlx;
+	void *mlx_win;
 	int bits_per_pixel;
 	int line_length;
 	int endian;
@@ -71,6 +84,7 @@ typedef struct s_data
 	int w_map;
 	int h_map;
 	t_player *player;
+	t_mlx img;
 } t_data;
 
 typedef enum e_map_element

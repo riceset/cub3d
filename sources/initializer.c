@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/14 18:16:05 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/17 21:14:11 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ int **init_map(char *filename, int h_map, int w_map, t_data *data)
 		temp = ft_strdup(line);
 		while (*temp && ft_isspace(*temp))
 			temp++;
-		printf("temp:%s\n", temp);
 		if (*temp == '\0' || *temp == '\n')
 		{
 			free(line);
@@ -218,8 +217,8 @@ t_player *init_player(t_data *data)
 				player_count++;
 				if (player_count == 2)
 					ft_exit("Multiple player detected", data);
-				player->plyr_x = j;
-				player->plyr_y = i;
+				player->plyr_x = j * TILE_SIZE;
+				player->plyr_y = i * TILE_SIZE;
 				player->player_status = data->map[i][j];
 			}
 			j++;
@@ -325,7 +324,7 @@ t_data *init_data(char **argv)
 	print_map(data->map, data->w_map);
 	data->player = init_player(data);
 	print_map(data->map, data->w_map);
-	if(validate_map(data))
-		ft_exit("Map Error", data);
+	// if(validate_map(data))
+	// 	ft_exit("Map Error", data);
 	return (data);
 }
