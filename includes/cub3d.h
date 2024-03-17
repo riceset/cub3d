@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/17 21:09:58 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/17 23:02:32 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,19 @@ void ft_exit(char *err_msg, t_data *data);
 void print_file(char *filename);
 void print_map(int **map, int w_map);
 int	extension_check(char *filename);
+void update_graphics(t_data *data);
+void draw_minimap(t_data *data, t_mlx img);
+void start_game(t_data *data);
+t_player *init_player(t_data *data);
+int get_width(char *filename, t_data *data);
+int get_height(char *filename, t_data *data);
+int **init_map(char *filename, int h_map, int w_map, t_data *data);
+int validate_map(t_data *data);
+void draw_square(t_mlx *img, int start_x, int start_y, int color, int size);
+void draw_grid(t_mlx *img, int x, int y, int color, int size);
+void draw_player(t_mlx *img, t_data *data);
+void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color);
+int open_file(char *filename);
+int num_count(char *str);
 
 #endif
