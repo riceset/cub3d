@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 16:30:57 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/17 21:14:11 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/17 22:13:55 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,8 @@ int **copy_map(int **src, int h_map, int w_map)
 
 void flood_fill(int **map, int x, int y, int h_map, int w_map, int *status)
 {
+	x /= TILE_SIZE;
+	y /= TILE_SIZE;
 	if (x < 0 || x >= w_map || y < 0 || y >= h_map || map[y][x] == FORBIDDEN_SPACE)
 	{
 		*status = 1;
@@ -324,7 +326,7 @@ t_data *init_data(char **argv)
 	print_map(data->map, data->w_map);
 	data->player = init_player(data);
 	print_map(data->map, data->w_map);
-	// if(validate_map(data))
-	// 	ft_exit("Map Error", data);
+	if(validate_map(data))
+		ft_exit("Map Error", data);
 	return (data);
 }
