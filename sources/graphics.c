@@ -39,12 +39,19 @@ void draw_minimap(t_data *data, t_mlx img) {
 float cast_ray(t_data *data, double angle) {
     float x = data->player->plyr_x + TILE_SIZE * 3 / 8 + TILE_SIZE / 7;
     float y = data->player->plyr_y + TILE_SIZE * 3 / 8 + TILE_SIZE / 7;
-    float x_step = cos(angle);
-    float y_step = -sin(angle);
+    float x_step = cos(angle) / 2;
+    float y_step = -sin(angle) / 2;
+    int previous_x = (int)(x / TILE_SIZE);
+    int previous_y = (int)(y / TILE_SIZE);
 
     while (data->map[(int)(y / TILE_SIZE)][(int)(x / TILE_SIZE)] != WALL) {
         x += x_step;
         y += y_step;
+        if(abs((previous_x - (int)(x / TILE_SIZE))) + abs((previous_y - (int)(y / TILE_SIZE))) == 2)
+            if(data->map[(int)(previous_y)][(int)(x / TILE_SIZE)] == WALL || data->map[(int)(y / TILE_SIZE)][previous_x] == WALL)
+                break;
+        previous_x = (int)(x / TILE_SIZE);
+        previous_y = (int)(y / TILE_SIZE);
         if (x < 0 || x >= data->w_map * TILE_SIZE || y < 0 || y >= data->h_map * TILE_SIZE) {
             break;
         }
@@ -52,13 +59,12 @@ float cast_ray(t_data *data, double angle) {
     return hypot(x - data->player->plyr_x - TILE_SIZE * 3 / 8 - TILE_SIZE / 7, y - data->player->plyr_y - TILE_SIZE * 3 / 8 - TILE_SIZE / 7);
 }
 
-void draw_ray(t_mlx *img, t_data *data, double angle, int color) {
+void draw_ray_minimap(t_mlx *img, t_data *data, double angle, int color) {
     float ray_length = cast_ray(data, angle);
     int end_x = data->player->plyr_x + TILE_SIZE * 3 / 8 + TILE_SIZE / 7 + (int)(ray_length * cos(angle));
     int end_y = data->player->plyr_y + TILE_SIZE * 3 / 8 + TILE_SIZE / 7 - (int)(ray_length * sin(angle));
     draw_line(img, data->player->plyr_x+ TILE_SIZE * 3 / 8 + TILE_SIZE / 7, data->player->plyr_y+ TILE_SIZE * 3 / 8 + TILE_SIZE / 7, end_x, end_y, color);
 }
-
 
 void draw_player(t_mlx *img, t_data *data) {
     int start_x = data->player->plyr_x + TILE_SIZE * 3 / 8;
@@ -76,19 +82,13 @@ void draw_player(t_mlx *img, t_data *data) {
         }
         i++;
     }
-
     double start_angle = data->player->angle - data->player->fov_rd / 2;
     double angle_step = data->player->fov_rd / 15;
     while(start_angle < data->player->angle + data->player->fov_rd / 2)
     {
-        draw_ray(img, data, start_angle, GREEN);
+        draw_ray_minimap(img, data, start_angle, GREEN);
         start_angle += angle_step;
     }
-    draw_ray(img, data, data->player->angle, GREEN);
-    draw_ray(img, data, data->player->angle - data->player->fov_rd / 4, GREEN);
-    draw_ray(img, data, data->player->angle - data->player->fov_rd / 2, GREEN);
-    draw_ray(img, data, data->player->angle + data->player->fov_rd / 4, GREEN);
-    draw_ray(img, data, data->player->angle + data->player->fov_rd / 2, GREEN);
 }
 
 void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color)
