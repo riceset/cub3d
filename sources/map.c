@@ -21,12 +21,12 @@ int get_width(char *filename, t_data *data)
 		if (line == NULL)
 			break;
 		tmp = num_count(line);
-		if (tmp > width)
+		if (tmp > width && (ft_isdigit(line[0]) || ft_isspace(line[0])))
 			width = tmp;
 		free(line);
 	}
 	close(fd);
-	return (width);
+    return (width - 1);
 }
 
 int num_count(char *str)
@@ -76,6 +76,7 @@ int get_height(char *filename, t_data *data)
 		free(line);
 	}
 	close(fd);
+    printf("height:%d\n", height);
 	return (height);
 }
 

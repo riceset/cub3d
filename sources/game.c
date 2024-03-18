@@ -29,7 +29,7 @@ int is_hitting_wall(float player_center_x, float player_center_y, t_data *data) 
 
 int key_press(int keycode, t_data *data)
 {
-    const float move_step = 5.0;
+    const float move_step = 4.5;
     float new_x, new_y, player_center_x, player_center_y;
 
     if (keycode == KEY_ESC)
@@ -106,7 +106,8 @@ t_data *init_data(char **argv)
         ft_exit("Memory allocation failed", data);
     data->h_map = get_height(argv[1], data);
     data->w_map = get_width(argv[1], data);
-    if (data->h_map < 9 || data->w_map < 7)
+    printf("h_map:%d, w_map;%d\n", data->h_map, data->w_map);
+    if (data->h_map < 3 || data->w_map < 3)
         ft_exit("Map Error", data);
     data->map = init_map(argv[1], data->h_map, data->w_map, data);
     print_map(data->map, data->w_map);
