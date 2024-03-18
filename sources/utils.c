@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hhagiwar <hhagiwar@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 17:10:05 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/03/06 17:10:08 by hhagiwar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 void	free_map(int **map, int height)
@@ -27,6 +15,16 @@ void	free_map(int **map, int height)
 		}
 		free(map);
 	}
+}
+
+int open_file(char *filename)
+{
+	int fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		ft_exit("Error opening file", NULL);
+	return (fd);
 }
 
 void	ft_exit(char *err_msg, t_data *data)
