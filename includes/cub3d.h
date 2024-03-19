@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/19 19:55:16 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/19 21:14:18 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@
 
 // Event types
 #define ON_KEYDOWN 2
+#define ON_DESTROY 17
 
 // Event masks
 #define KEY_PRESS_MASK (1L<<0)
+#define NO_EVENT_MASK (0L)
 
 // Keyboard key codes
 #define KEY_ESC 53

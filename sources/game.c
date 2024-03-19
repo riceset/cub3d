@@ -94,6 +94,7 @@ void start_game(t_data *data)
     draw_minimap(data, data->img);
     mlx_put_image_to_window(data->img.mlx, data->img.mlx_win, data->img.img, 0, 0);
     mlx_hook(data->img.mlx_win, ON_KEYDOWN, KEY_PRESS_MASK, key_press, data);
+    mlx_hook(data->img.mlx_win, ON_DESTROY, NO_EVENT_MASK, close_window, NULL);
     mlx_loop(data->img.mlx);
 }
 
