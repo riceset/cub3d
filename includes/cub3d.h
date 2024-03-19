@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/17 23:02:32 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/19 19:55:16 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 // Game settings
 #define ROTATION_SPEED 0.045
-#define TILE_SIZE 30
+#define TILE_SIZE 15
 
 // Window dimensions
 #define WIDTH 1200
@@ -55,6 +55,7 @@
 #define ASH 0xB2BEB5
 #define YELLOW 0xFFFF00
 #define GREEN 0x00B16B
+#define CORNSILK 0xFFF8DC
 
 typedef struct s_mlx
 {

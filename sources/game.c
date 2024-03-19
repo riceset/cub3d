@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+void render_wall(t_data *data, t_mlx img);
+
 int close_window(void *param)
 {
     (void)param;
@@ -88,11 +90,10 @@ void start_game(t_data *data)
     data->img.mlx_win = mlx_new_window(data->img.mlx, WIDTH, HEIGHT, "Cub3D");
     data->img.img = mlx_new_image(data->img.mlx, WIDTH, HEIGHT);
     data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
+    render_wall(data, data->img);
     draw_minimap(data, data->img);
-    printf("\n--------- Key action ---------\n\n");
+    mlx_put_image_to_window(data->img.mlx, data->img.mlx_win, data->img.img, 0, 0);
     mlx_hook(data->img.mlx_win, ON_KEYDOWN, KEY_PRESS_MASK, key_press, data);
-    printf("\n--------- End of Key action ---------\n\n");
-
     mlx_loop(data->img.mlx);
 }
 
@@ -106,7 +107,6 @@ t_data *init_data(char **argv)
         ft_exit("Memory allocation failed", data);
     data->h_map = get_height(argv[1], data);
     data->w_map = get_width(argv[1], data);
-    printf("h_map:%d, w_map;%d\n", data->h_map, data->w_map);
     if (data->h_map < 3 || data->w_map < 3)
         ft_exit("Map Error", data);
     data->map = init_map(argv[1], data->h_map, data->w_map, data);
