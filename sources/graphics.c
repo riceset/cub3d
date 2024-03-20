@@ -37,7 +37,7 @@ void render_wall(t_data *data, t_mlx img)
     ray = 0;
     while (ray < WIDTH )
     {
-        ray_angle = data->player->angle - (data->player->fov_rd / 2) + (ray * data->player->fov_rd / WIDTH);
+        ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
         distance = cast_ray(data, ray_angle);
         corrected_distance = distance * cos(ray_angle - data->player->angle); // Fisheye effect correction
         wall_height = (int)((TILE_SIZE / corrected_distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
@@ -87,8 +87,8 @@ float cast_ray(t_data *data, double angle)
 {
     float x = data->player->plyr_x + TILE_SIZE * 3 / 8 + TILE_SIZE / 7;
     float y = data->player->plyr_y + TILE_SIZE * 3 / 8 + TILE_SIZE / 7;
-    float x_step = cos(angle) / 2;
-    float y_step = -sin(angle) / 2;
+    float x_step = cos(angle) / 15;
+    float y_step = -sin(angle) / 15;
     int previous_x = (int)(x / TILE_SIZE);
     int previous_y = (int)(y / TILE_SIZE);
 
