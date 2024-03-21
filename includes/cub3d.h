@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hhagiwar <hhagiwar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/19 21:14:18 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/21 16:22:29 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ typedef enum e_map_element
 t_data *init_data(char **argv);
 void ft_exit(char *err_msg, t_data *data);
 void print_file(char *filename);
-void print_map(int **map, int w_map);
+void print_map(int **map, int w_map, int h_map);
 int	extension_check(char *filename);
 void update_graphics(t_data *data);
 void draw_minimap(t_data *data, t_mlx img);

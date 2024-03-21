@@ -79,7 +79,7 @@ void	print_file(char *filename)
 	close(fd);
 }
 
-void	print_map(int **map, int w_map)
+void	print_map(int **map, int w_map, int h_map)
 {
 	int	i;
 	int	j;
@@ -87,7 +87,7 @@ void	print_map(int **map, int w_map)
 	i = 0;
 	j = 0;
 	printf("\n--------- Start of Map ---------\n\n");
-	while (map[i] != NULL)
+	while (i < h_map)
 	{
 		while (j < w_map)
 		{
