@@ -86,6 +86,7 @@ int key_press(int keycode, t_data *data)
 
 void start_game(t_data *data)
 {
+    printf("%08X, %08X\n", data->colors.ceiling_color, data->colors.floor_color);
     data->img.mlx = mlx_init();
     data->img.mlx_win = mlx_new_window(data->img.mlx, WIDTH, HEIGHT, "Cub3D");
     data->img.img = mlx_new_image(data->img.mlx, WIDTH, HEIGHT);
@@ -98,6 +99,76 @@ void start_game(t_data *data)
     mlx_loop(data->img.mlx);
 }
 
+int get_floor_color(char *filename, t_data *data)
+{
+    int color;
+    int fd;
+    char *line;
+    char **tmp;
+
+    color = -1;
+	fd = open(filename, O_RDONLY, 0);
+	if (fd == -1)
+		ft_exit("Error opening file", data);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+        if(line[0] == 'F' && ft_isspace(line[1]))
+        {
+            if(color != -1 || check_line(line) == ERROR)
+                ft_exit("Map Error", data);
+            tmp = ft_split(line, ',');
+            color = rgb_to_int(ft_atoi(++tmp[0]), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+            if(color == -1)
+            {
+                free_array(tmp);
+                ft_exit("Map Error", data);
+            }
+            printf("Floor color code: %08X\n", color);
+        }
+        free(line);
+    }
+    close(fd);
+    return color;
+}
+
+int get_ceiling_color(char *filename, t_data *data)
+{
+    int color;
+    int fd;
+    char *line;
+    char **tmp;
+
+    color = -1;
+	fd = open(filename, O_RDONLY, 0);
+	if (fd == -1)
+		ft_exit("Error opening file", data);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+        if(line[0] == 'C' && ft_isspace(line[1]))
+        {
+            if(color != -1 || check_line(line) == ERROR)
+                ft_exit("Map Error", data);
+            tmp = ft_split(line, ',');
+            color = rgb_to_int(ft_atoi(++tmp[0]), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+            if(color == -1)
+            {
+                free_array(tmp);
+                ft_exit("Map Error", data);
+            }
+            printf("Ceiling color code: %08X\n", color);
+        }
+        free(line);
+    }
+    close(fd);
+    return color;
+}
+
 t_data *init_data(char **argv)
 {
     t_data *data;
@@ -106,6 +177,8 @@ t_data *init_data(char **argv)
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         ft_exit("Memory allocation failed", data);
+    data->colors.floor_color = get_floor_color(argv[1], data);
+    data->colors.ceiling_color = get_ceiling_color(argv[1], data);
     data->h_map = get_height(argv[1], data);
     data->w_map = get_width(argv[1], data);
     if (data->h_map < 3 || data->w_map < 3)

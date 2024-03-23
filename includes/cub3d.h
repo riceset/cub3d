@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hhagiwar <hhagiwar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/21 16:22:29 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:07:40 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ typedef struct s_player
 	int player_status;
 } t_player;
 
+typedef struct s_colors
+{
+    int floor_color;
+    int ceiling_color;
+} t_colors;
+
 typedef struct s_data
 {
 	int **map;
@@ -88,6 +94,7 @@ typedef struct s_data
 	int h_map;
 	t_player *player;
 	t_mlx img;
+    t_colors colors;
 } t_data;
 
 typedef enum e_map_element
@@ -120,5 +127,8 @@ void draw_player(t_mlx *img, t_data *data);
 void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color);
 int open_file(char *filename);
 int num_count(char *str);
+void free_array(char **array);
+int rgb_to_int(int r, int g, int b);
+int check_line(char *line);
 
 #endif
