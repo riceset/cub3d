@@ -23,7 +23,7 @@ void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color)
     }
 }
 
-void render_wall(t_data *data, t_mlx img)
+void render_wall(t_data *data, t_mlx *img)
 {
     int ray;
     double ray_angle;
@@ -34,7 +34,6 @@ void render_wall(t_data *data, t_mlx img)
     int bottom_pixel;
 
     ray = 0;
-    ray = 0;
     while (ray < WIDTH)
     {
         ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
@@ -43,12 +42,17 @@ void render_wall(t_data *data, t_mlx img)
         wall_height = (int)((TILE_SIZE / corrected_distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
         top_pixel = (HEIGHT / 2) - (wall_height / 2);
         bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
-        draw_wall(&img, ray, 0, top_pixel, data->colors.ceiling_color);
-        draw_wall(&img, ray, top_pixel, bottom_pixel, CORNSILK);
-        draw_wall(&img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
+        if (top_pixel < 0)
+            top_pixel = 0;
+        if (bottom_pixel > HEIGHT)
+            bottom_pixel = HEIGHT;
+        draw_wall(img, ray, 0, top_pixel, data->colors.ceiling_color);
+        draw_wall(img, ray, top_pixel, bottom_pixel, CORNSILK);
+        draw_wall(img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
         ray++;
     }
 }
+
 
 void draw_minimap(t_data *data, t_mlx img)
 {
@@ -208,6 +212,6 @@ void update_graphics(t_data *data)
     mlx_destroy_image(data->img.mlx, data->img.img);
     data->img.img = mlx_new_image(data->img.mlx, WIDTH, HEIGHT);
     data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
-    render_wall(data, data->img);
+    render_wall(data, &data->img);
     draw_minimap(data, data->img);
 }
