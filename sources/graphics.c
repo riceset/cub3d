@@ -12,10 +12,9 @@ void my_mlx_pixel_put(t_mlx *img, int x, int y, int color)
     *(unsigned int *)dst = color;
 }
 
-void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel)
+void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color)
 {
     int pixel_y = top_pixel;
-    int color = CORNSILK;
 
     while (pixel_y < bottom_pixel)
     {
@@ -35,21 +34,18 @@ void render_wall(t_data *data, t_mlx img)
     int bottom_pixel;
 
     ray = 0;
-    while (ray < WIDTH )
+    ray = 0;
+    while (ray < WIDTH)
     {
         ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
         distance = cast_ray(data, ray_angle);
         corrected_distance = distance * cos(ray_angle - data->player->angle); // Fisheye effect correction
         wall_height = (int)((TILE_SIZE / corrected_distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
-
         top_pixel = (HEIGHT / 2) - (wall_height / 2);
-        if (top_pixel < 0)
-            top_pixel = 0;
-
         bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
-        if (bottom_pixel > HEIGHT)
-            bottom_pixel = HEIGHT;
-        draw_wall(&img, ray, top_pixel, bottom_pixel);
+        draw_wall(&img, ray, 0, top_pixel, data->colors.ceiling_color);
+        draw_wall(&img, ray, top_pixel, bottom_pixel, CORNSILK);
+        draw_wall(&img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
         ray++;
     }
 }

@@ -77,7 +77,7 @@ void free_array(char **array) {
 
 int rgb_to_int(int r, int g, int b) {
     if((0 <= r && r <= 255) && (0 <= g && g <= 255) && (0 <= b && b <= 255))
-        return (r << 24) | (g << 16) | (b << 8);
+        return (r << 16) | (g << 8) | b;
     return -1;
 }
 
