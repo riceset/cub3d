@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/17 23:02:32 by hiro             ###   ########.fr       */
+/*   Updated: 2024/03/23 18:07:40 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@
 
 // Event types
 #define ON_KEYDOWN 2
+#define ON_DESTROY 17
 
 // Event masks
 #define KEY_PRESS_MASK (1L<<0)
+#define NO_EVENT_MASK (0L)
 
 // Keyboard key codes
 #define KEY_ESC 53
@@ -41,7 +43,7 @@
 
 // Game settings
 #define ROTATION_SPEED 0.045
-#define TILE_SIZE 30
+#define TILE_SIZE 15
 
 // Window dimensions
 #define WIDTH 1200
@@ -55,6 +57,7 @@
 #define ASH 0xB2BEB5
 #define YELLOW 0xFFFF00
 #define GREEN 0x00B16B
+#define CORNSILK 0xFFF8DC
 
 typedef struct s_mlx
 {
@@ -76,6 +79,12 @@ typedef struct s_player
 	int player_status;
 } t_player;
 
+typedef struct s_colors
+{
+    int floor_color;
+    int ceiling_color;
+} t_colors;
+
 typedef struct s_data
 {
 	int **map;
@@ -85,6 +94,7 @@ typedef struct s_data
 	int h_map;
 	t_player *player;
 	t_mlx img;
+    t_colors colors;
 } t_data;
 
 typedef enum e_map_element
@@ -101,7 +111,7 @@ typedef enum e_map_element
 t_data *init_data(char **argv);
 void ft_exit(char *err_msg, t_data *data);
 void print_file(char *filename);
-void print_map(int **map, int w_map);
+void print_map(int **map, int w_map, int h_map);
 int	extension_check(char *filename);
 void update_graphics(t_data *data);
 void draw_minimap(t_data *data, t_mlx img);
@@ -117,5 +127,8 @@ void draw_player(t_mlx *img, t_data *data);
 void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color);
 int open_file(char *filename);
 int num_count(char *str);
+void free_array(char **array);
+int rgb_to_int(int r, int g, int b);
+int check_line(char *line);
 
 #endif

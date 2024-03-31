@@ -60,6 +60,41 @@ int	extension_check(char *filename)
 	return (ERROR);
 }
 
+void free_array(char **array) {
+    int i;
+
+    i = 0;
+    if(!array)
+    {
+        while(!array[i])
+        {
+            free(array[i]);
+            i++;
+        }
+        free(array);
+    }
+}
+
+int rgb_to_int(int r, int g, int b) {
+    if((0 <= r && r <= 255) && (0 <= g && g <= 255) && (0 <= b && b <= 255))
+        return (r << 16) | (g << 8) | b;
+    return -1;
+}
+
+int check_line(char *line)
+{
+    int i;
+
+    i = 2;
+    while(line[i] != '\0')
+    {
+        if(!('0' <= line[i] && line[i] <= '9') && line[i] != ',' && !ft_isspace(line[i]))
+            return ERROR;
+        i++;
+    }
+    return SUCCESS;
+}
+
 void	print_file(char *filename)
 {
 	char	*line;
@@ -79,7 +114,7 @@ void	print_file(char *filename)
 	close(fd);
 }
 
-void	print_map(int **map, int w_map)
+void	print_map(int **map, int w_map, int h_map)
 {
 	int	i;
 	int	j;
@@ -87,7 +122,7 @@ void	print_map(int **map, int w_map)
 	i = 0;
 	j = 0;
 	printf("\n--------- Start of Map ---------\n\n");
-	while (map[i] != NULL)
+	while (i < h_map)
 	{
 		while (j < w_map)
 		{
