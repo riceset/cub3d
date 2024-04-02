@@ -1,4 +1,3 @@
-
 #include "cub3d.h"
 #include "mlx.h"
 
@@ -12,6 +11,65 @@ void my_mlx_pixel_put(t_mlx *img, int x, int y, int color)
     *(unsigned int *)dst = color;
 }
 
+void skip_bmp_header(int fd)
+{
+	unsigned char header[54];
+
+	if (read(fd, header, 54) != 54) {
+		perror("Failed to read header");
+		close(fd);
+		exit(1);
+	}
+}
+
+t_texture *load_texture_from_bmp(const char *file_path) {
+    int fd = open(file_path, O_RDONLY);
+    if (fd < 0) {
+        perror("Error opening file");
+        exit(1);
+    }
+
+    skip_bmp_header(fd);
+
+    t_texture *texture = malloc(sizeof(t_texture));
+    if (!texture) {
+        perror("Failed to allocate texture");
+        close(fd);
+        exit(1);
+    }
+
+    texture->width = 128;
+    texture->height = 128;
+    int dataSize = texture->width * texture->height * 3;
+    texture->data = malloc(dataSize);
+    if (!texture->data) {
+        perror("Failed to allocate texture data");
+        free(texture);
+        close(fd);
+        exit(1);
+    }
+
+    if (read(fd, texture->data, dataSize) != dataSize) {
+        perror("Error reading texture data");
+        free(texture->data);
+        free(texture);
+        close(fd);
+        exit(1);
+    }
+
+    close(fd);
+    return texture;
+}
+
+int get_texture_color(t_texture *texture, int x, int y) {
+    // Assuming texture data is stored as 24-bit BGR
+    int offset = (y * texture->width + x) * 3;
+    unsigned char blue = texture->data[offset];
+    unsigned char green = texture->data[offset + 1];
+    unsigned char red = texture->data[offset + 2];
+    return (red << 16) | (green << 8) | blue;
+}
+
 void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color)
 {
     int pixel_y = top_pixel;
@@ -20,6 +78,22 @@ void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color)
     {
         my_mlx_pixel_put(img, ray, pixel_y, color);
         pixel_y++;
+    }
+}
+
+void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_texture *texture) {
+    int wallHeight = bottom_pixel - top_pixel;
+    for (int pixel_y = top_pixel; pixel_y < bottom_pixel; pixel_y++) {
+        // Normalize current y coordinate to range [0, texture->height]
+        int texY = ((pixel_y - top_pixel) * texture->height) / wallHeight;
+        // Assuming the entire texture width is mapped across all rays
+        int texX = (ray * texture->width) / WIDTH; // WIDTH is the screen width
+        
+        // Fetch the appropriate color from the texture
+        int color = get_texture_color(texture, texX, texY);
+        
+        // Draw the pixel
+        my_mlx_pixel_put(img, ray, pixel_y, color);
     }
 }
 
@@ -32,13 +106,14 @@ void render_wall(t_data *data, t_mlx *img)
     int wall_height;
     int top_pixel;
     int bottom_pixel;
+	t_texture *texture = load_texture_from_bmp("img.bmp");
 
     ray = 0;
     while (ray < WIDTH)
     {
         ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
         distance = cast_ray(data, ray_angle);
-        corrected_distance = distance * cos(ray_angle - data->player->angle); // Fisheye effect correction
+        corrected_distance = distance * cos(ray_angle - data->player->angle);
         wall_height = (int)((TILE_SIZE / corrected_distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
         top_pixel = (HEIGHT / 2) - (wall_height / 2);
         bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
@@ -47,7 +122,8 @@ void render_wall(t_data *data, t_mlx *img)
         if (bottom_pixel > HEIGHT)
             bottom_pixel = HEIGHT;
         draw_wall(img, ray, 0, top_pixel, data->colors.ceiling_color);
-        draw_wall(img, ray, top_pixel, bottom_pixel, CORNSILK);
+        // draw_wall(img, ray, top_pixel, bottom_pixel, CORNSILK);
+		draw_textured_wall(img, ray, top_pixel, bottom_pixel, texture);
         draw_wall(img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
         ray++;
     }

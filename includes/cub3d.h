@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/23 18:07:40 by hiro             ###   ########.fr       */
+/*   Updated: 2024/04/01 18:59:52 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,12 @@ typedef enum e_map_element
 	PLAYER_EAST,
 	PLAYER_WEST,
 } t_map_element;
+
+typedef struct s_texture {
+    unsigned char *data;
+    int width;
+    int height;
+} t_texture;
 
 t_data *init_data(char **argv);
 void ft_exit(char *err_msg, t_data *data);
