@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/03/23 18:07:40 by hiro             ###   ########.fr       */
+/*   Updated: 2024/04/16 20:02:56 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	int plyr_x;
-	int plyr_y;
-	double angle;
-	float fov_rd;
-	int player_status;
+    int plyr_x;
+    int plyr_y;
+    double angle;
+    float fov_rd; // 既にあるかもしれません
+    int player_status;
 } t_player;
 
 typedef struct s_colors
@@ -107,6 +107,13 @@ typedef enum e_map_element
 	PLAYER_EAST,
 	PLAYER_WEST,
 } t_map_element;
+
+typedef struct s_texture
+{
+	unsigned char *data;
+	int height;
+	int width;
+} t_texture;
 
 t_data *init_data(char **argv);
 void ft_exit(char *err_msg, t_data *data);
