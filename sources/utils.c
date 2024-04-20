@@ -17,16 +17,6 @@ void	free_map(int **map, int height)
 	}
 }
 
-int open_file(char *filename)
-{
-	int fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		ft_exit("Error opening file", NULL);
-	return (fd);
-}
-
 void	ft_exit(char *err_msg, t_data *data)
 {
 	if (err_msg)
@@ -79,6 +69,13 @@ int rgb_to_int(int r, int g, int b) {
     if((0 <= r && r <= 255) && (0 <= g && g <= 255) && (0 <= b && b <= 255))
         return (r << 16) | (g << 8) | b;
     return -1;
+}
+
+int open_file(const char *filename, t_data *data) {
+    int fd = open(filename, O_RDONLY, 0);
+    if (fd == -1)
+        ft_exit("Error opening file", data);
+    return fd;
 }
 
 int check_line(char *line)
