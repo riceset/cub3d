@@ -1,32 +1,5 @@
 #include "cub3d.h"
 
-int close_window(void *param)
-{
-    (void)param;
-    exit(EXIT_SUCCESS);
-}
-
-int is_hitting_wall(float player_center_x, float player_center_y, t_data *data) {
-    int radius = TILE_SIZE / 7;
-    int map_x, map_y;
-
-    map_x = (int)(player_center_x / TILE_SIZE);
-    map_y = (int)((player_center_y - radius) / TILE_SIZE);
-    if (data->map[map_y][map_x] == WALL)
-        return 1;
-    map_y = (int)((player_center_y + radius) / TILE_SIZE);
-    if (data->map[map_y][map_x] == WALL)
-        return 1;
-    map_x = (int)((player_center_x - radius) / TILE_SIZE);
-    map_y = (int)(player_center_y / TILE_SIZE);
-    if (data->map[map_y][map_x] == WALL)
-        return 1;
-    map_x = (int)((player_center_x + radius) / TILE_SIZE);
-    if (data->map[map_y][map_x] == WALL)
-        return 1;
-    return 0;
-}
-
 int key_press(int keycode, t_data *data)
 {
     const float move_step = 4.5;
@@ -79,20 +52,4 @@ int key_press(int keycode, t_data *data)
         update_graphics(data);
 
     return 0;
-}
-
-
-void start_game(t_data *data)
-{
-    printf("%08X, %08X\n", data->colors.ceiling_color, data->colors.floor_color);
-    data->img.mlx = mlx_init();
-    data->img.mlx_win = mlx_new_window(data->img.mlx, WIDTH, HEIGHT, "Cub3D");
-    data->img.img = mlx_new_image(data->img.mlx, WIDTH, HEIGHT);
-    data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel, &data->img.line_length, &data->img.endian);
-    render_wall(data, &data->img);
-    draw_minimap(data, data->img);
-    mlx_put_image_to_window(data->img.mlx, data->img.mlx_win, data->img.img, 0, 0);
-    mlx_hook(data->img.mlx_win, ON_KEYDOWN, KEY_PRESS_MASK, key_press, data);
-    mlx_hook(data->img.mlx_win, ON_DESTROY, NO_EVENT_MASK, close_window, NULL);
-    mlx_loop(data->img.mlx);
 }

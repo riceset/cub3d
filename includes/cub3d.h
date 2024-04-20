@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/04/20 16:50:33 by tkomeno          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:55:50 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,8 @@ int					**allocate_map_memory(int h_map, int w_map, t_data *data);
 int					get_map_colors(char *filename, t_data *data, char type);
 void flood_fill(int **map, int x, int y, int h_map, int w_map, int *status);
 int **copy_map(int **src, int h_map, int w_map);
+int close_window(void *param);
+int key_press(int keycode, t_data *data);
+int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
 
 #endif
