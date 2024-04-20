@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-double init_angle(t_player *player);
-
 t_player *init_player(t_data *data)
 {
 	t_player *player;
@@ -38,16 +36,4 @@ t_player *init_player(t_data *data)
 	else
 		player->angle = init_angle(player);
 	return player;
-}
-
-double init_angle(t_player *player)
-{
-	if(player->player_status == PLAYER_EAST)
-		return 0;
-	else if(player->player_status == PLAYER_NORTH)
-		return M_PI * 1 / 2;
-	else if(player->player_status == PLAYER_WEST)
-		return M_PI;
-	else
-		return M_PI * 3 / 2;
 }

@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/04/20 16:55:50 by tkomeno          ###   ########.fr       */
+/*   Updated: 2024/04/20 16:58:52 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,7 @@ int **copy_map(int **src, int h_map, int w_map);
 int close_window(void *param);
 int key_press(int keycode, t_data *data);
 int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
+double init_angle(t_player *player);
+t_player *init_player(t_data *data);
 
 #endif
