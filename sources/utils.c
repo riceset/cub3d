@@ -37,6 +37,7 @@ void	ft_exit(char *err_msg, t_data *data)
 	}
 	exit(EXIT_FAILURE);
 }
+
 int	extension_check(char *filename)
 {
 	int	i;
