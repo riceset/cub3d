@@ -132,19 +132,19 @@ void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_
     if (direction == 1) { // 東側の壁
         hitY = data->player->plyr_y - corrected_distance * sin(ray_angle);
         wallX = fmod(hitY, TILE_SIZE);
-        texX = (int)((TILE_SIZE - wallX) * texture->width / TILE_SIZE) % texture->width;
+        texX = (int)((TILE_SIZE / 2 - wallX) * texture->width / TILE_SIZE) % texture->width;
     } else if (direction == 2) { // 西側の壁
         hitY = data->player->plyr_y - corrected_distance * sin(ray_angle);
         wallX = fmod(hitY, TILE_SIZE);
-        texX = (int)(wallX * texture->width / TILE_SIZE) % texture->width;
+        texX = (int)((TILE_SIZE / 2 + wallX) * texture->width / TILE_SIZE) % texture->width;
     } else if (direction == 3) { // 南側の壁
         hitX = data->player->plyr_x + corrected_distance * cos(ray_angle);
         wallX = fmod(hitX, TILE_SIZE);
-        texX = (int)(wallX * texture->width / TILE_SIZE) % texture->width;
+        texX = (int)(wallX / 2 * texture->width / TILE_SIZE) % texture->width;
     } else if (direction == 4) { // 北側の壁
         hitX = data->player->plyr_x + corrected_distance * cos(ray_angle);
         wallX = fmod(hitX, TILE_SIZE);
-        texX = (int)((TILE_SIZE - wallX) * texture->width / TILE_SIZE) % texture->width;
+        texX = (int)((TILE_SIZE / 2 - wallX) * texture->width / TILE_SIZE) % texture->width;
     }
 
     for (int pixel_y = top_pixel; pixel_y < bottom_pixel; pixel_y++) {
