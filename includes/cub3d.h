@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/04/20 16:58:52 by tkomeno          ###   ########.fr       */
+/*   Updated: 2024/04/25 13:37:04 by tkomeno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,15 @@ int key_press(int keycode, t_data *data);
 int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
 double init_angle(t_player *player);
 t_player *init_player(t_data *data);
+t_texture *load_texture_from_bmp(const char *file_path);
+void draw_line(t_mlx *img, int start_x, int start_y, int end_x, int end_y, int color);
+void draw_square(t_mlx *img, int start_x, int start_y, int color, int size);
+void draw_grid(t_mlx *img, int x, int y, int color, int size);
+void draw_player(t_mlx *img, t_data *data);
+void draw_ray_minimap(t_mlx *img, t_data *data, double angle, int color);
+void draw_minimap(t_data *data, t_mlx img);
+void my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
+void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color);
+float cast_ray(t_data *data, double angle);
 
 #endif
