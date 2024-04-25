@@ -68,7 +68,7 @@ void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_
     } else if (direction == 3) { // 南側の壁
         hitX = data->player->plyr_x + corrected_distance * cos(ray_angle);
         wallX = fmod(hitX, TILE_SIZE);
-        texX = (int)(wallX / 2 * texture->width / TILE_SIZE) % texture->width;
+        texX = (int)((TILE_SIZE / 2 + wallX) * texture->width / TILE_SIZE) % texture->width;
     } else if (direction == 4) { // 北側の壁
         hitX = data->player->plyr_x + corrected_distance * cos(ray_angle);
         wallX = fmod(hitX, TILE_SIZE);
