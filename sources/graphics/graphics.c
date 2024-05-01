@@ -142,7 +142,7 @@ float cast_ray(t_data *data, double angle)
             break;
         }
     }
-    printf("x:%f, y:%f\n", (x / TILE_SIZE), (y / TILE_SIZE));
+    // printf("x:%f, y:%f\n", (x / TILE_SIZE), (y / TILE_SIZE));
     return hypot(x - data->player->plyr_x - TILE_SIZE * 3 / 8 - TILE_SIZE / 7, y - data->player->plyr_y - TILE_SIZE * 3 / 8 - TILE_SIZE / 7);
 }
 
