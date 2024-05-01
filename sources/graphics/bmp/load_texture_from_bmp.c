@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void skip_bmp_header(int fd)
+static void skip_bmp_header(int fd, int *width, int *height)
 {
 	unsigned char header[54];
 
@@ -9,6 +9,11 @@ static void skip_bmp_header(int fd)
 		close(fd);
 		exit(1);
 	}
+
+	*width = header[18] | (header[19] << 8) | (header[20] << 16) | (header[21] << 24);
+    *height = header[22] | (header[23] << 8) | (header[24] << 16) | (header[25] << 24);
+
+	*height *= -1;
 }
 
 t_texture *load_texture_from_bmp(const char *file_path) {
@@ -18,8 +23,6 @@ t_texture *load_texture_from_bmp(const char *file_path) {
         exit(1);
     }
 
-    skip_bmp_header(fd);
-
     t_texture *texture = malloc(sizeof(t_texture));
     if (!texture) {
         perror("Failed to allocate texture");
@@ -27,8 +30,8 @@ t_texture *load_texture_from_bmp(const char *file_path) {
         exit(1);
     }
 
-    texture->width = 128;
-    texture->height = 128;
+    skip_bmp_header(fd, &texture->width, &texture->height);
+
     int dataSize = texture->width * texture->height * 3;
     texture->data = malloc(dataSize);
     if (!texture->data) {
