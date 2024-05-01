@@ -1,8 +1,7 @@
 #include "cub3d.h"
 
-// 新しい関数をプロトタイプ宣言
 static float cast_ray_step(float x, float y, float angle, t_data *data);
-static int check_collision(float x, float y, float angle, t_data *data); // 引数を 4 つに修正
+static int check_collision(float x, float y, float angle, t_data *data);
 
 float cast_ray(t_data *data, double angle)
 {
