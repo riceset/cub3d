@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/01 18:29:41 by hiro             ###   ########.fr       */
+/*   Updated: 2024/05/01 18:44:25 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,7 @@ float cast_ray(t_data *data, double angle);
 int get_texture_color(t_texture *texture, int x, int y);
 void update_graphics(t_data *data);
 float cast_ray(t_data *data, double angle);
+void render_wall(t_data *data, t_mlx *img);
+void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_texture *texture, t_data *data);
 
 #endif
