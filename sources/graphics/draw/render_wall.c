@@ -26,7 +26,6 @@ void render_wall(t_data *data, t_mlx *img)
     }
 }
 
-
 static float calculate_ray_distance(t_data *data, int ray)
 {
     double ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
