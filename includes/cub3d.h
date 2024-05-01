@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/01 14:40:46 by hiro             ###   ########.fr       */
+/*   Updated: 2024/05/01 18:24:46 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,5 +166,7 @@ void draw_minimap(t_data *data, t_mlx img);
 void my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
 void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color);
 float cast_ray(t_data *data, double angle);
+int get_texture_color(t_texture *texture, int x, int y);
+void update_graphics(t_data *data);
 
 #endif
