@@ -16,13 +16,8 @@ void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_
     draw_textured_pixels(img, ray, top_pixel, bottom_pixel, texture, wallHeight, texX);
 }
 
-static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
+static void calculate_hits_and_texture(t_data *data, double ray_angle, double corrected_distance, int direction, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
 {
-    double ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
-    float distance = cast_ray(data, ray_angle);
-    double corrected_distance = distance * cos(ray_angle - data->player->angle);
-    int direction = determine_wall_direction(data, ray_angle);
-
     if (direction == 1)
     { // 東側の壁
         *hitY = data->player->plyr_y - corrected_distance * sin(ray_angle);
@@ -47,6 +42,18 @@ static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, d
         *wallX = fmod(*hitX, TILE_SIZE);
         *texX = (int)((TILE_SIZE / 2 - *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
+}
+
+static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
+{
+    double ray_angle;
+    double corrected_distance;
+    int direction;
+
+    ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
+    corrected_distance = cast_ray(data, ray_angle) * cos(ray_angle - data->player->angle);
+    direction = determine_wall_direction(data, ray_angle);
+    calculate_hits_and_texture(data, ray_angle, corrected_distance, direction, hitX, hitY, wallX, texX, texture);
 }
 
 static void draw_textured_pixels(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_texture *texture, int wallHeight, int texX)
