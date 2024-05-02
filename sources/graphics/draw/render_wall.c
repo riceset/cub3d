@@ -2,7 +2,7 @@
 
 void render_wall(t_data *data, t_mlx *img);
 static float calculate_ray_distance(t_data *data, int ray);
-static int calculate_wall_height(float distance, double ray_angle, t_data *data);
+static int calculate_wall_height(float distance, t_data *data);
 static void draw_walls(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel);
 
 void render_wall(t_data *data, t_mlx *img)
@@ -11,8 +11,7 @@ void render_wall(t_data *data, t_mlx *img)
     while (ray < WIDTH)
     {
         float distance = calculate_ray_distance(data, ray);
-        double corrected_distance = distance * cos((data->player->angle + (data->player->fov_rd / 2)) - (ray * data->player->fov_rd / WIDTH));
-        int wall_height = calculate_wall_height(distance, corrected_distance, data);
+        int wall_height = calculate_wall_height(distance, data);
         int top_pixel = (HEIGHT / 2) - (wall_height / 2);
         int bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
         if (top_pixel < 0) top_pixel = 0;
@@ -32,9 +31,8 @@ static float calculate_ray_distance(t_data *data, int ray)
     return cast_ray(data, ray_angle);
 }
 
-static int calculate_wall_height(float distance, double ray_angle, t_data *data)
+static int calculate_wall_height(float distance, t_data *data)
 {
-    (void)ray_angle;
     return (int)((TILE_SIZE / distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
 }
 
