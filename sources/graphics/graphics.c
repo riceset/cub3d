@@ -92,7 +92,7 @@ void render_wall(t_data *data, t_mlx *img) {
     int wall_height = 0;
     int top_pixel;
     int bottom_pixel;
-	t_texture *texture = load_texture_from_bmp("test.bmp");
+	t_texture *texture = load_texture_from_bmp("filter/images/stadium.bmp");
 
     ray = 0;
     while (ray < WIDTH) {
