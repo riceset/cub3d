@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-int determine_wall_direction(t_data *data, double ray_angle, float distance);
-
 float calculate_initial_position(float player_position, int tile_size) {
     return player_position + tile_size * 3 / 8 + tile_size / 7;
 }
@@ -35,8 +33,7 @@ int trace_ray(t_data *data, float x, float y, float x_step, float y_step) {
     return 0;
 }
 
-int determine_wall_direction(t_data *data, double ray_angle, float distance) {
-    (void)distance;
+int determine_wall_direction(t_data *data, double ray_angle) {
     float x = calculate_initial_position(data->player->plyr_x, TILE_SIZE);
     float y = calculate_initial_position(data->player->plyr_y, TILE_SIZE);
     float x_step = calculate_step(ray_angle, 1);

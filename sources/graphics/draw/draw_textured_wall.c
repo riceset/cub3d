@@ -21,7 +21,7 @@ static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, d
     double ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
     float distance = cast_ray(data, ray_angle);
     double corrected_distance = distance * cos(ray_angle - data->player->angle);
-    int direction = determine_wall_direction(data, ray_angle, distance);
+    int direction = determine_wall_direction(data, ray_angle);
 
     if (direction == 1)
     { // 東側の壁
