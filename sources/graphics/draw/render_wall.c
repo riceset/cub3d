@@ -3,7 +3,7 @@
 void render_wall(t_data *data, t_mlx *img);
 static float calculate_ray_distance(t_data *data, int ray);
 static int calculate_wall_height(float distance, t_data *data);
-static void draw_walls(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel);
+static void draw_ceiling_floor(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel);
 
 void render_wall(t_data *data, t_mlx *img)
 {
@@ -20,7 +20,7 @@ void render_wall(t_data *data, t_mlx *img)
         if (texture == NULL)
             printf("Error: Failed to load texture.\n");
         draw_textured_wall(img, ray, top_pixel, bottom_pixel, texture, data);
-        draw_walls(data, img, ray, top_pixel, bottom_pixel);
+        draw_ceiling_floor(data, img, ray, top_pixel, bottom_pixel);
         ray++;
     }
 }
@@ -36,7 +36,7 @@ static int calculate_wall_height(float distance, t_data *data)
     return (int)((TILE_SIZE / distance) * (WIDTH / (2 * tan(data->player->fov_rd / 2))));
 }
 
-static void draw_walls(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel)
+static void draw_ceiling_floor(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel)
 {
     draw_wall(img, ray, 0, top_pixel, data->colors.ceiling_color);
     draw_wall(img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
