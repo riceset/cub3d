@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture);
+static int calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture);
 static void draw_textured_pixels(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int wall_top_pixel, int wall_bottom_pixel, t_texture *texture, int wallHeight, int texX);
 
 void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int wall_top_pixel, int wall_bottom_pixel, t_texture *texture, t_data *data)
@@ -10,10 +10,11 @@ void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, in
     double hitX;
     double hitY;
     double wallX;
+    int direction;
 
     wallHeight = wall_bottom_pixel - wall_top_pixel;
-    calculate_texture_coordinates(data, ray, &hitX, &hitY, &wallX, &texX, texture);
-    draw_textured_pixels(img, ray, top_pixel, bottom_pixel, wall_top_pixel, wall_bottom_pixel, texture, wallHeight, texX);
+    direction = calculate_texture_coordinates(data, ray, &hitX, &hitY, &wallX, &texX, texture);
+    draw_textured_pixels(img, ray, direction, top_pixel, bottom_pixel, wall_top_pixel, texture, wallHeight, texX);
 }
 
 static void calculate_hits_and_texture(t_data *data, double ray_angle, double distance, int direction, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
@@ -44,7 +45,7 @@ static void calculate_hits_and_texture(t_data *data, double ray_angle, double di
     }
 }
 
-static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
+static int calculate_texture_coordinates(t_data *data, int ray, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
 {
     double ray_angle;
     int direction;
@@ -52,12 +53,12 @@ static void calculate_texture_coordinates(t_data *data, int ray, double *hitX, d
     ray_angle = data->player->angle + (data->player->fov_rd / 2) - (ray * data->player->fov_rd / WIDTH);
     direction = determine_wall_direction(data, ray_angle);
     calculate_hits_and_texture(data, ray_angle, cast_ray(data, ray_angle), direction, hitX, hitY, wallX, texX, texture);
+    return direction;
 }
 
-static void draw_textured_pixels(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int wall_top_pixel, int wall_bottom_pixel, t_texture *texture, int wallHeight, int texX)
+static void draw_textured_pixels(t_mlx *img, int ray, int direction, int top_pixel, int bottom_pixel, int wall_top_pixel, t_texture *texture, int wallHeight, int texX)
 {
-    (void)wall_bottom_pixel;
-    (void)texX;
+    (void)direction; // texture
     for (int pixel_y = top_pixel; pixel_y < bottom_pixel; pixel_y++)
     {
         int texY = ((pixel_y - wall_top_pixel) * texture->height) / wallHeight;
