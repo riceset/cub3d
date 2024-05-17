@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static void skip_bmp_header(int fd, int *width, int *height)
+static void read_bmp_header(int fd, int *width, int *height, int *has_alpha)
 {
 	unsigned char header[54];
 
@@ -13,11 +13,24 @@ static void skip_bmp_header(int fd, int *width, int *height)
 	*width = header[18] | (header[19] << 8) | (header[20] << 16) | (header[21] << 24);
     *height = header[22] | (header[23] << 8) | (header[24] << 16) | (header[25] << 24);
 
-	*height *= -1;
+	int bitsPerPixel = header[28] | (header[29] << 8);
+    int compression = header[30] | (header[31] << 8) | (header[32] << 16) | (header[33] << 24);
+
+    if (bitsPerPixel == 32 && (compression == 3 || compression == 6)) {
+        *has_alpha = 1;
+    } else {
+        *has_alpha = 0;
+    }
+
+    if (*height < 0) {
+        *height *= -1;
+    }
 }
 
 t_texture *load_texture_from_bmp(const char *file_path) {
     int fd = open(file_path, O_RDONLY);
+	int has_alpha;
+
     if (fd < 0) {
         perror("Error opening file");
         exit(1);
@@ -30,7 +43,12 @@ t_texture *load_texture_from_bmp(const char *file_path) {
         exit(1);
     }
 
-    skip_bmp_header(fd, &texture->width, &texture->height);
+    read_bmp_header(fd, &texture->width, &texture->height, &has_alpha);
+
+	if (has_alpha) {
+		perror("Provide a 24bit bitmap image");
+		exit(1);
+	}
 
     int dataSize = texture->width * texture->height * 3;
     texture->data = malloc(dataSize);
