@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/02 16:57:00 by hiro             ###   ########.fr       */
+/*   Updated: 2024/05/17 11:25:42 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void draw_grid(t_mlx *img, int x, int y, int color, int size);
 void draw_player(t_mlx *img, t_data *data);
 void draw_ray_minimap(t_mlx *img, t_data *data, double angle, int color);
 void draw_minimap(t_data *data, t_mlx img);
-void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, t_texture *texture, t_data *data);
+void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int wall_top_pixel, int wall_bottom_pixel, t_texture *texture, t_data *data);
 void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color);
 
 // init

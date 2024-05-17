@@ -14,13 +14,14 @@ void render_wall(t_data *data, t_mlx *img)
         int wall_height = calculate_wall_height(distance, data);
         int top_pixel = (HEIGHT / 2) - (wall_height / 2);
         int bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
-        if (top_pixel < 0) top_pixel = 0;
-        if (bottom_pixel > HEIGHT) bottom_pixel = HEIGHT;
+
         t_texture *texture = load_texture_from_bmp("test.bmp");
         if (texture == NULL)
-            printf("Error: Failed to load texture.\n");
-        draw_textured_wall(img, ray, top_pixel, bottom_pixel, texture, data);
-        draw_ceiling_floor(data, img, ray, top_pixel, bottom_pixel);
+            ft_exit("Failed to load texture", data);
+        int draw_start = top_pixel < 0 ? 0 : top_pixel;
+        int draw_end = bottom_pixel > HEIGHT ? HEIGHT : bottom_pixel;
+        draw_textured_wall(img, ray, draw_start, draw_end, top_pixel, bottom_pixel, texture, data);
+        draw_ceiling_floor(data, img, ray, draw_start, draw_end);
         ray++;
     }
 }
@@ -41,3 +42,4 @@ static void draw_ceiling_floor(t_data *data, t_mlx *img, int ray, int top_pixel,
     draw_wall(img, ray, 0, top_pixel, data->colors.ceiling_color);
     draw_wall(img, ray, bottom_pixel, HEIGHT, data->colors.floor_color);
 }
+
