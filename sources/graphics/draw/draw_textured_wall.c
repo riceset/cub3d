@@ -19,25 +19,25 @@ void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, in
 
 static void calculate_hits_and_texture(t_data *data, double ray_angle, double distance, int direction, double *hitX, double *hitY, double *wallX, int *texX, t_texture *texture)
 {
-    if (direction == 1)
+    if (direction == EAST)
     { // 東側の壁
         *hitY = data->player->plyr_y - distance * sin(ray_angle);
         *wallX = fmod(*hitY, TILE_SIZE);
         *texX = -(int)((TILE_SIZE / 2 + *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
-    else if (direction == 2)
+    else if (direction == WEST)
     { // 西側の壁
         *hitY = data->player->plyr_y - distance * sin(ray_angle);
         *wallX = fmod(*hitY, TILE_SIZE);
         *texX = (int)((TILE_SIZE / 2 + *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
-    else if (direction == 3)
+    else if (direction == SOUTH)
     { // 南側の壁
         *hitX = data->player->plyr_x + distance * cos(ray_angle);
         *wallX = fmod(*hitX, TILE_SIZE);
         *texX = (int)((TILE_SIZE / 2 + *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
-    else if (direction == 4)
+    else if (direction == NORTH)
     { // 北側の壁
         *hitX = data->player->plyr_x + distance * cos(ray_angle);
         *wallX = fmod(*hitX, TILE_SIZE);

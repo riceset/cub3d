@@ -34,16 +34,16 @@ int trace_ray(t_data *data, float x, float y, float x_step, float y_step)
                 if (current_x != previous_x)
                 {
                     if (x_step > 0)
-                        return 2;
+                        return WEST;
                     else
-                        return 1;
+                        return EAST;
                 }
                 else if (current_y != previous_y)
                 {
                     if (y_step > 0)
-                        return 4;
+                        return NORTH;
                     else
-                        return 3;
+                        return SOUTH;
                 }
             }
         }

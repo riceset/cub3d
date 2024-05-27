@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/17 11:25:42 by hiro             ###   ########.fr       */
+/*   Updated: 2024/05/27 14:00:34 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@
 // Window dimensions
 #define WIDTH 1200
 #define HEIGHT 600
+
+// Colors
+#define EAST 0
+#define WEST 1
+#define SOUTH 2
+#define NORTH 3
 
 // Colors
 #define FLOOR 'F'
