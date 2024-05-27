@@ -23,7 +23,7 @@ static void calculate_hits_and_texture(t_data *data, double ray_angle, double di
     { // 東側の壁
         *hitY = data->player->plyr_y - distance * sin(ray_angle);
         *wallX = fmod(*hitY, TILE_SIZE);
-        *texX = (int)((TILE_SIZE / 2 - *wallX) * texture->width / TILE_SIZE) % texture->width;
+        *texX = -(int)((TILE_SIZE / 2 + *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
     else if (direction == 2)
     { // 西側の壁
@@ -41,7 +41,7 @@ static void calculate_hits_and_texture(t_data *data, double ray_angle, double di
     { // 北側の壁
         *hitX = data->player->plyr_x + distance * cos(ray_angle);
         *wallX = fmod(*hitX, TILE_SIZE);
-        *texX = (int)((TILE_SIZE / 2 - *wallX) * texture->width / TILE_SIZE) % texture->width;
+        *texX = -(int)((TILE_SIZE / 2 + *wallX) * texture->width / TILE_SIZE) % texture->width;
     }
 }
 
