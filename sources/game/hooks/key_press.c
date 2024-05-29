@@ -1,55 +1,46 @@
 #include "cub3d.h"
 
+void handle_key_esc();
+void handle_key_a(t_data *data);
+void handle_key_s(t_data *data);
+void handle_key_d(t_data *data);
+void handle_key_w(t_data *data);
+
+void move_player(t_data *data, float move_x, float move_y) {
+    float new_x = data->player->plyr_x + move_x;
+    float new_y = data->player->plyr_y + move_y;
+    float player_center_x = new_x + TILE_SIZE / 2;
+    float player_center_y = new_y + TILE_SIZE / 2;
+
+    if (!is_hitting_wall(player_center_x, player_center_y, data)) {
+        data->player->plyr_x = new_x;
+        data->player->plyr_y = new_y;
+        ft_printf("Player moved\n");
+    } else {
+        ft_printf("Player hit a wall\n");
+    }
+}
+
 int key_press(int keycode, t_data *data)
 {
-    const float move_step = 4.5;
-    float new_x, new_y, player_center_x, player_center_y;
-
-    if (keycode == KEY_ESC)
-    {
-        ft_printf("ESC key is pressed\n");
-        exit(EXIT_SUCCESS);
+    switch(keycode) {
+        case KEY_ESC:
+            handle_key_esc();
+            break;
+        case KEY_A:
+            handle_key_a(data);
+            break;
+        case KEY_D:
+            handle_key_d(data);
+            break;
+        case KEY_S:
+            handle_key_s(data);
+            break;
+        case KEY_W:
+            handle_key_w(data);
+            break;
     }
-    else if (keycode == KEY_A)
-    {
-        ft_printf("A key is pressed\n");
-        data->player->angle += ROTATION_SPEED;
-    }
-    else if (keycode == KEY_D)
-    {
-        ft_printf("D key is pressed\n");
-        data->player->angle -= ROTATION_SPEED;
-    }
-    else if (keycode == KEY_S)
-    {
-        new_x = data->player->plyr_x - cos(data->player->angle) * move_step;
-        new_y = data->player->plyr_y + sin(data->player->angle) * move_step;
-        player_center_x = new_x + TILE_SIZE / 2;
-        player_center_y = new_y + TILE_SIZE / 2;
-        if (!is_hitting_wall(player_center_x, player_center_y, data)) {
-            data->player->plyr_x = new_x;
-            data->player->plyr_y = new_y;
-            ft_printf("S key is pressed and player moved\n");
-        } else {
-            ft_printf("S key is pressed but player hit a wall\n");
-        }
-    }
-    else if (keycode == KEY_W) {
-        new_x = data->player->plyr_x + cos(data->player->angle) * move_step;
-        new_y = data->player->plyr_y - sin(data->player->angle) * move_step;
-        player_center_x = new_x + TILE_SIZE / 2;
-        player_center_y = new_y + TILE_SIZE / 2;
-        if (!is_hitting_wall(player_center_x, player_center_y, data)) {
-            data->player->plyr_x = new_x;
-            data->player->plyr_y = new_y;
-            ft_printf("W key is pressed and player moved\n");
-        } else {
-            ft_printf("W key is pressed but player hit a wall\n");
-        }
-    }
-
     if (keycode != KEY_ESC)
         update_graphics(data);
-
     return 0;
 }
