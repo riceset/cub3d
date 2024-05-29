@@ -93,6 +93,20 @@ int check_line(char *line)
     return SUCCESS;
 }
 
+char *extract_filename(char *path)
+{
+    char *filename = ft_strrchr(path, '/');
+    if (filename == NULL)
+        filename = path;
+    else
+        filename++;
+
+    size_t len = strlen(filename);
+    if (len > 0 && filename[len - 1] == '\n')
+        filename[len - 1] = '\0';
+    return filename;
+}
+
 void	print_file(char *filename)
 {
 	char	*line;

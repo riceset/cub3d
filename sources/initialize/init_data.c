@@ -10,6 +10,7 @@ t_data *init_data(char **argv)
         ft_exit("Memory allocation failed", data);
     data->colors.floor_color = get_map_colors(argv[1], data, FLOOR);
     data->colors.ceiling_color = get_map_colors(argv[1], data, CEILING);
+    get_textures(argv[1], &data);
     data->h_map = get_map_height(argv[1], data);
     data->w_map = get_map_width(argv[1], data);
     if (data->h_map < 3 || data->w_map < 3)

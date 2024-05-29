@@ -15,7 +15,8 @@ void render_wall(t_data *data, t_mlx *img)
         int top_pixel = (HEIGHT / 2) - (wall_height / 2);
         int bottom_pixel = (HEIGHT / 2) + (wall_height / 2);
 
-        t_texture *texture = load_texture_from_bmp("test.bmp");
+        //NOTE: Currently sets all the textures to the NO pattern.
+        t_texture *texture = load_texture_from_bmp(extract_filename(data->texture[0]));
         if (texture == NULL)
             ft_exit("Failed to load texture", data);
         int draw_start = top_pixel < 0 ? 0 : top_pixel;
