@@ -21,7 +21,7 @@ int get_map_height(char *filename, t_data *data)
 		temp = line;
 		while (ft_isspace(*temp))
 			temp++;
-		if ((*temp != '\0' || *temp != '\n') && (is_map_started || (*temp >= '0' && *temp <= '9')))
+		if ((*temp != '\0' && *temp != '\n') && (is_map_started || (*temp >= '0' && *temp <= '9')))
 		{
 			is_map_started = 1;
 			height++;
