@@ -5,19 +5,6 @@ static float calculate_ray_distance(t_data *data, int ray);
 static int calculate_wall_height(float distance, t_data *data);
 static void draw_ceiling_floor(t_data *data, t_mlx *img, int ray, int top_pixel, int bottom_pixel);
 
-char *extract_filename(char *path) {
-    char *filename = ft_strrchr(path, '/');
-    if (filename == NULL)
-        filename = path;
-    else
-        filename++;
-
-    size_t len = strlen(filename);
-    if (len > 0 && filename[len - 1] == '\n')
-        filename[len - 1] = '\0';
-    return filename;
-}
-
 void render_wall(t_data *data, t_mlx *img)
 {
     int ray = 0;

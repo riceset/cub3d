@@ -167,6 +167,7 @@ int get_map_width(char *filename, t_data *data);
 int get_map_height(char *filename, t_data *data);
 int get_map_colors(char *filename, t_data *data, char type);
 int get_texture_color(t_texture *texture, int x, int y);
+char **get_textures(char *filename, t_data **data);
 
 // utils
 void ft_exit(char *err_msg, t_data *data);
@@ -187,6 +188,6 @@ int close_window(void *param);
 int key_press(int keycode, t_data *data);
 int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
 void my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
-
+char *extract_filename(char *path);
 
 #endif
