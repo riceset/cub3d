@@ -105,6 +105,7 @@ typedef struct s_data
 	t_player *player;
 	t_mlx img;
 	t_colors colors;
+  char *texture[4];
 } t_data;
 
 typedef enum e_map_element
