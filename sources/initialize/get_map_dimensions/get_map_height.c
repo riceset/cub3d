@@ -29,7 +29,6 @@ int get_map_height(char *filename, t_data *data)
 		free(line);
 	}
 	close(fd);
-    if (height > 50)
-        ft_exit("Map height must be <= 50", data);
-    return (height);
+    printf("height:%d\n", height);
+	return (height);
 }
