@@ -23,5 +23,7 @@ int get_map_width(char *filename, t_data *data)
 		free(line);
 	}
 	close(fd);
+    if (width > 50)
+        ft_exit("Map width must be <= 50", data);
     return (width - 1);
 }
