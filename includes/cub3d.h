@@ -6,7 +6,7 @@
 /*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/27 14:00:34 by hiro             ###   ########.fr       */
+/*   Updated: 2024/05/30 17:41:57 by hiro             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@
 #define HEIGHT 600
 
 // Colors
-#define EAST 0
-#define WEST 1
-#define SOUTH 2
-#define NORTH 3
+#define NORTH 0
+#define SOUTH 1
+#define WEST 2
+#define EAST 3
 
 // Colors
 #define FLOOR 'F'
@@ -126,6 +126,21 @@ typedef struct s_texture
 	int width;
 } t_texture;
 
+typedef struct s_wall_data {
+    int top_pixel;
+    int bottom_pixel;
+    int wall_height;
+    float distance;
+} t_wall_data;
+
+typedef struct s_texture_data {
+    double hitX;
+    double hitY;
+    double wallX;
+    int texX;
+    t_texture *texture[4];
+} t_texture_data;
+
 // cub3d
 void render_wall(t_data *data, t_mlx *img);
 float cast_ray(t_data *data, double angle);
@@ -151,7 +166,7 @@ void draw_grid(t_mlx *img, int x, int y, int color, int size);
 void draw_player(t_mlx *img, t_data *data);
 void draw_ray_minimap(t_mlx *img, t_data *data, double angle, int color);
 void draw_minimap(t_data *data, t_mlx img);
-void draw_textured_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int wall_top_pixel, int wall_bottom_pixel, t_texture *texture, t_data *data);
+void draw_textured_wall(t_mlx *img, int ray, t_wall_data *wall_data, t_texture_data *tex_data, t_data *data);
 void draw_wall(t_mlx *img, int ray, int top_pixel, int bottom_pixel, int color);
 
 // init
