@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void handle_key_esc();
+void handle_key_esc(t_data *data);
 void handle_key_a(t_data *data);
 void handle_key_s(t_data *data);
 void handle_key_d(t_data *data);
@@ -25,7 +25,7 @@ int key_press(int keycode, t_data *data)
 {
     switch(keycode) {
         case KEY_ESC:
-            handle_key_esc();
+            handle_key_esc(data);
             break;
         case KEY_A:
             handle_key_a(data);

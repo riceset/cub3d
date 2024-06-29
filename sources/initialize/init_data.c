@@ -4,7 +4,6 @@ t_data *init_data(char **argv)
 {
     t_data *data;
 
-    print_file(argv[1]);
     data = (t_data *)malloc(sizeof(t_data));
     if (!data)
         ft_exit("Memory allocation failed", data);

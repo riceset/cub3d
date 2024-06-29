@@ -26,6 +26,7 @@ int **init_map(char *filename, int h_map, int w_map, t_data *data)
 			fill_map_row(map[i], line, w_map, data);
 			i++;
 		}
+		free(temp);
 		free(line);
 	}
 	close(fd);

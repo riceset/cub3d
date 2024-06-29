@@ -2,8 +2,9 @@
 
 void move_player(t_data *data, float move_x, float move_y);
 
-void handle_key_esc() {
+void handle_key_esc(t_data *data) {
     ft_printf("ESC key is pressed\n");
+    free_data(data);
     exit(EXIT_SUCCESS);
 }
 

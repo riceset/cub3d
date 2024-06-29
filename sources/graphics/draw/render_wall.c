@@ -6,6 +6,22 @@ static void draw_ceiling_floor(t_data *data, t_mlx *img, int ray, t_wall_data *w
 static void fill_wall_data(t_wall_data *wall_data, float distance, t_data *data);
 static void load_textures(t_data *data, t_texture *textures[4]);
 
+static void free_textures(t_texture *textures[4])
+{
+    int i;
+
+    i = 0;
+    while (i < 4)
+    {
+        if (textures[i] != NULL)
+        {
+            free(textures[i]->data);
+            free(textures[i]);
+        }
+        i++;
+    }
+}
+
 void render_wall(t_data *data, t_mlx *img)
 {
     int ray = 0;
@@ -14,7 +30,6 @@ void render_wall(t_data *data, t_mlx *img)
     t_texture_data tex_data;
 
     load_textures(data, tex_data.texture);
-
     while (ray < WIDTH)
     {
         distance = calculate_ray_distance(data, ray);
@@ -25,6 +40,7 @@ void render_wall(t_data *data, t_mlx *img)
 
         ray++;
     }
+    free_textures(tex_data.texture);
 }
 
 static void load_textures(t_data *data, t_texture *textures[4])

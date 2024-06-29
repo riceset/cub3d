@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiro <hiro@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 18:39:40 by tkomeno           #+#    #+#             */
-/*   Updated: 2024/05/30 17:41:57 by hiro             ###   ########.fr       */
+/*   Updated: 2024/06/29 20:32:22 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_data
 	t_player *player;
 	t_mlx img;
 	t_colors colors;
-  char *texture[4];
+	char *texture[4];
 } t_data;
 
 typedef enum e_map_element
@@ -204,5 +204,6 @@ int key_press(int keycode, t_data *data);
 int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
 void my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
 char *extract_filename(char *path);
+void 	free_data(t_data *data);
 
 #endif

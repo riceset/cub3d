@@ -17,24 +17,34 @@ void	free_map(int **map, int height)
 	}
 }
 
+void free_data(t_data *data)
+{
+	int i;
+
+	i = 0;
+    if (data)
+    {
+        if (data->map)
+            free_map(data->map, data->h_map);
+        while(i < 4)
+		{
+            if (data->texture[i])
+                free(data->texture[i]);
+			i++;
+        }
+        if (data->player)
+            free(data->player);
+        free(data);
+    }
+}
+
 void	ft_exit(char *err_msg, t_data *data)
 {
 	if (err_msg)
 	{
 		perror(err_msg);
 	}
-	if (data)
-	{
-		if (data->map)
-		{
-			free_map(data->map, data->h_map);
-		}
-		if (data->player)
-		{
-			free(data->player);
-		}
-		free(data);
-	}
+	free_data(data);
 	exit(EXIT_FAILURE);
 }
 
@@ -55,9 +65,9 @@ void free_array(char **array) {
     int i;
 
     i = 0;
-    if(!array)
+    if(array != NULL)
     {
-        while(!array[i])
+        while(array[i] != NULL)
         {
             free(array[i]);
             i++;
