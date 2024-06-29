@@ -21,7 +21,6 @@ int get_map_colors(char *filename, t_data *data, char type)
                 close(fd);
                 ft_exit("Map Error", data);
             }
-            printf("%c color code: %08X\n", type, color);
             free_array(tmp);
         }
         free(line);

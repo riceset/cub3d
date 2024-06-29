@@ -111,7 +111,7 @@ char *extract_filename(char *path)
     else
         filename++;
 
-    size_t len = strlen(filename);
+    size_t len = ft_strlen(filename);
     if (len > 0 && filename[len - 1] == '\n')
         filename[len - 1] = '\0';
     return filename;
@@ -124,15 +124,15 @@ void	print_file(char *filename)
 	int		line_number;
 
 	line_number = 1;
-	printf("\n--------- Start of %s ---------\n\n", filename);
+	ft_printf("\n--------- Start of %s ---------\n\n", filename);
 	fd = open(filename, O_RDONLY);
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		printf("%d: %s", line_number, line);
+		ft_printf("%d: %s", line_number, line);
 		free(line);
 		line_number++;
 	}
-	printf("\n\n--------- End of %s ---------\n\n", filename);
+	ft_printf("\n\n--------- End of %s ---------\n\n", filename);
 	close(fd);
 }
 
@@ -143,17 +143,17 @@ void	print_map(int **map, int w_map, int h_map)
 
 	i = 0;
 	j = 0;
-	printf("\n--------- Start of Map ---------\n\n");
+	ft_printf("\n--------- Start of Map ---------\n\n");
 	while (i < h_map)
 	{
 		while (j < w_map)
 		{
-			printf("%d", map[i][j]);
+			ft_printf("%d", map[i][j]);
 			j++;
 		}
-		printf("\n");
+		ft_printf("\n");
 		j = 0;
 		i++;
 	}
-	printf("\n--------- End of Map ---------\n\n");
+	ft_printf("\n--------- End of Map ---------\n\n");
 }

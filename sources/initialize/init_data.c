@@ -15,7 +15,6 @@ t_data *init_data(char **argv)
     if (data->h_map < 3 || data->w_map < 3)
         ft_exit("Map Error", data);
     data->map = init_map(argv[1], data->h_map, data->w_map, data);
-    print_map(data->map, data->w_map, data->h_map);
     data->player = init_player(data);
     print_map(data->map, data->w_map, data->h_map);
     if (validate_map(data))
