@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   close_window.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/30 17:35:33 by hhagiwar          #+#    #+#             */
+/*   Updated: 2024/06/30 17:35:34 by hhagiwar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int close_window(void *param)
+int	close_window(void *param)
 {
-    (void)param;
-    exit(EXIT_SUCCESS);
+	(void)param;
+	exit(EXIT_SUCCESS);
 }
