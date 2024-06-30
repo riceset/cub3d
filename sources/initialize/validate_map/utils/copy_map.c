@@ -4,9 +4,7 @@ int **copy_map(int **src, int h_map, int w_map)
 {
 	int **copy = (int **)malloc(sizeof(int *) * h_map);
 	if (!copy)
-	{
 		return NULL;
-	}
 
 	int i = 0;
 	while (i < h_map)

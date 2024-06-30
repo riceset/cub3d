@@ -6,9 +6,8 @@ int validate_map(t_data *data) {
     int player_y = data->player->plyr_y / TILE_SIZE;
 
     int **map_copy = copy_map(data->map, data->h_map, data->w_map);
-    if (!map_copy) {
+    if (!map_copy)
         ft_exit("Failed to copy map for validation", data);
-    }
 
     flood_fill(map_copy, player_x, player_y, data->h_map, data->w_map, &status);
 

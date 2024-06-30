@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/30 17:10:32 by hhagiwar          #+#    #+#             */
+/*   Updated: 2024/06/30 17:27:39 by hhagiwar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data *data;
+	t_data	*data;
 
 	(void)data;
 	if (argc == 2)
@@ -13,13 +25,14 @@ int main(int argc, char **argv)
 		start_game(data);
 	}
 	else
-		ft_exit("Error: Invalid command line arguments. \nUsage: ./cub3D <path_to_map_file.cub>", NULL);
+		ft_exit("Error: Invalid command line arguments. \n \
+		Usage: ./cub3D <path_to_map_file.cub>", NULL);
 	exit(EXIT_SUCCESS);
 }
 
-__attribute__((destructor)) static void destructor()
-{
-	printf("\n--------- destructor ---------\n\n");
-	system("leaks -q cub3d");
-	printf("\n--------- End of destructor ---------\n\n");
-}
+// __attribute__((destructor)) static void destructor()
+// {
+// 	printf("\n--------- destructor ---------\n\n");
+// 	system("leaks -q cub3d");
+// 	printf("\n--------- End of destructor ---------\n\n");
+// }
