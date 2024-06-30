@@ -1,30 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map_colors.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/30 18:11:47 by hhagiwar          #+#    #+#             */
+/*   Updated: 2024/06/30 18:11:50 by hhagiwar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int get_map_colors(char *filename, t_data *data, char type)
+static void	handle_error(char *line, int fd, t_data *data)
 {
-    int color = -1;
-    int fd = open_file(filename, data);
-    if (fd == -1)
-        ft_exit("Error opening file", data);
+	free(line);
+	close(fd);
+	ft_exit("Map Error", data);
+}
 
-    char *line;
-    while ((line = get_next_line(fd)) != NULL) {
-        if (line[0] == type && ft_isspace(line[1])) {
-            if (color != -1 || check_line(line) == ERROR) {
-                close(fd);
-                ft_exit("Map Error", data);
-            }
-            char **tmp = ft_split(line, ',');
-            color = rgb_to_int(ft_atoi(tmp[0] + 1), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
-            if (color == -1) {
-                free_array(tmp);
-                close(fd);
-                ft_exit("Map Error", data);
-            }
-            free_array(tmp);
-        }
-        free(line);
-    }
-    close(fd);
-    return color;
+static int	is_valid_color_format(char **tmp)
+{
+	return (tmp && tmp[0] && tmp[1] && tmp[2] && !tmp[3]);
+}
+
+static int	process_color_line(char *line, int fd, t_data *data)
+{
+	char	**tmp;
+	int		color;
+
+	tmp = ft_split(line, ',');
+	if (!is_valid_color_format(tmp))
+	{
+		free_array(tmp);
+		handle_error(line, fd, data);
+	}
+	color = rgb_to_int(ft_atoi(tmp[0] + 1), ft_atoi(tmp[1]), ft_atoi(tmp[2]));
+	free_array(tmp);
+	if (color == -1)
+		handle_error(line, fd, data);
+	return (color);
+}
+
+int	get_map_colors(char *filename, t_data *data, char type)
+{
+	int		color;
+	int		fd;
+	char	*line;
+
+	color = -1;
+	fd = open_file(filename, data);
+	if (fd == -1)
+		ft_exit("Error opening file", data);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		if (line[0] == type && ft_isspace(line[1]))
+		{
+			if (color != -1 || check_line(line) == ERROR)
+				handle_error(line, fd, data);
+			color = process_color_line(line, fd, data);
+		}
+		free(line);
+	}
+	close(fd);
+	return (color);
 }
