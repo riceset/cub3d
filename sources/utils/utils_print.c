@@ -6,7 +6,7 @@
 /*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:24:05 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/06/30 17:25:43 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:39:55 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ void	print_file(char *filename)
 	line_number = 1;
 	ft_printf("\n--------- Start of %s ---------\n\n", filename);
 	fd = open(filename, O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+		{
+			free(line);
+			break ;
+		}
 		ft_printf("%d: %s", line_number, line);
 		free(line);
 		line_number++;
