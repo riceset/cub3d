@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-int num_count(char *str)
+int	num_count(char *str)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	while (*str != '\0')

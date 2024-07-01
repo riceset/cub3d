@@ -27,8 +27,8 @@ int	extension_check(char *filename)
 	i = 0;
 	while (filename[i] != '\0' && filename[i] != '.')
 		i++;
-	if (i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && \
-	filename[i + 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
+	if (i != 0 && filename[i] == '.' && filename[i + 1] == 'c' && filename[i
+			+ 2] == 'u' && filename[i + 3] == 'b' && filename[i + 4] == '\0')
 		return (SUCCESS);
 	return (ERROR);
 }

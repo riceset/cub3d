@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-int **allocate_map_memory(int h_map, int w_map, t_data *data)
+int	**allocate_map_memory(int h_map, int w_map, t_data *data)
 {
-	int i;
-	int **map;
+	int	i;
+	int	**map;
 
 	i = 0;
 	map = (int **)malloc(sizeof(int *) * h_map);
@@ -18,4 +18,3 @@ int **allocate_map_memory(int h_map, int w_map, t_data *data)
 	}
 	return (map);
 }
-

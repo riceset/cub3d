@@ -1,8 +1,8 @@
 #include "cub3d.h"
 
-void fill_map_row(int *map_row, char *line, int w_map, t_data *data)
+void	fill_map_row(int *map_row, char *line, int w_map, t_data *data)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while ((line[j] != '\0' && line[j] != '\n') && j < w_map)

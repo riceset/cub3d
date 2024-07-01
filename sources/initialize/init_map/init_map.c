@@ -45,8 +45,8 @@ int	**init_map(char *filename, int h_map, int w_map, t_data *data)
 			i++;
 		free(line);
 	}
-    while ((line = get_next_line(fd)) != NULL)
-        free(line);
+	while ((line = get_next_line(fd)) != NULL)
+		free(line);
 	close(fd);
 	return (map);
 }

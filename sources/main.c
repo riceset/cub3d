@@ -26,13 +26,7 @@ int	main(int argc, char **argv)
 	}
 	else
 		ft_exit("Error: Invalid command line arguments. \n \
-		Usage: ./cub3D <path_to_map_file.cub>", NULL);
+		Usage: ./cub3D <path_to_map_file.cub>",
+				NULL);
 	exit(EXIT_SUCCESS);
 }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	printf("\n--------- destructor ---------\n\n");
-// 	system("leaks -q cub3d");
-// 	printf("\n--------- End of destructor ---------\n\n");
-// }
