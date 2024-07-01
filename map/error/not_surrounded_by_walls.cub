@@ -1,0 +1,12 @@
+NO ./test.bmp
+SO ./test.bmp
+WE ./test.bmp
+EA ./test.bmp
+F 220,100,0
+C 225,30,0
+
+1111111
+1000001
+10N0001
+1000001
+1111100
