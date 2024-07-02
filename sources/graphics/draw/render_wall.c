@@ -1,14 +1,6 @@
 #include "cub3d.h"
 
-void			render_wall(t_data *data, t_mlx *img);
-static float	calculate_ray_distance(t_data *data, int ray);
-static void		draw_ceiling_floor(t_data *data, t_mlx *img, int ray,
-					t_wall_data *wall_data);
-static void		fill_wall_data(t_wall_data *wall_data, float distance,
-					t_data *data);
-static void		load_textures(t_data *data, t_texture *textures[4]);
-
-static void	free_textures(t_texture *textures[4])
+void	free_textures(t_texture *textures[4])
 {
 	int	i;
 
@@ -44,7 +36,7 @@ void	render_wall(t_data *data, t_mlx *img)
 	free_textures(tex_data.texture);
 }
 
-static void	load_textures(t_data *data, t_texture *textures[4])
+void	load_textures(t_data *data, t_texture *textures[4])
 {
 	int	i;
 
@@ -58,7 +50,7 @@ static void	load_textures(t_data *data, t_texture *textures[4])
 	}
 }
 
-static float	calculate_ray_distance(t_data *data, int ray)
+float	calculate_ray_distance(t_data *data, int ray)
 {
 	double	ray_angle;
 
@@ -67,13 +59,13 @@ static float	calculate_ray_distance(t_data *data, int ray)
 	return (cast_ray(data, ray_angle));
 }
 
-static int	calculate_wall_height(float distance, t_data *data)
+int	calculate_wall_height(float distance, t_data *data)
 {
 	return (int)((TILE_SIZE / distance) * (WIDTH / (2 * tan(data->player->fov_rd
 					/ 2))));
 }
 
-static void	fill_wall_data(t_wall_data *wall_data, float distance, t_data *data)
+void	fill_wall_data(t_wall_data *wall_data, float distance, t_data *data)
 {
 	wall_data->distance = distance;
 	wall_data->wall_height = calculate_wall_height(distance, data);
@@ -81,7 +73,7 @@ static void	fill_wall_data(t_wall_data *wall_data, float distance, t_data *data)
 	wall_data->bottom_pixel = (HEIGHT / 2) + (wall_data->wall_height / 2);
 }
 
-static void	draw_ceiling_floor(t_data *data, t_mlx *img, int ray,
+void	draw_ceiling_floor(t_data *data, t_mlx *img, int ray,
 		t_wall_data *wall_data)
 {
 	draw_wall(img, ray, 0, wall_data->top_pixel, data->colors.ceiling_color);
