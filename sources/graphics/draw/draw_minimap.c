@@ -22,7 +22,7 @@ void	draw_minimap(t_data *data, t_mlx img)
 				draw_square(&img, x * TILE_SIZE, y * TILE_SIZE, color,
 					TILE_SIZE);
 			}
-			draw_grid(&img, x, y, GREY, TILE_SIZE);
+			draw_grid(&img, x, y, TILE_SIZE);
 			if (data->map[y][x] >= PLAYER_NORTH
 				&& data->map[y][x] <= PLAYER_WEST)
 				draw_player(&img, data);
