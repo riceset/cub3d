@@ -14,6 +14,9 @@
 #define SUCCESS 0
 #define ERROR 1
 
+#define TRUE 0
+#define FALSE 1
+
 // Event types
 #define ON_KEYDOWN 2
 #define ON_DESTROY 17
@@ -193,5 +196,6 @@ int is_hitting_wall(float player_center_x, float player_center_y, t_data *data);
 void my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
 char *extract_filename(char *path);
 void 	free_data(t_data *data);
+int	is_direction_map(int data);
 
 #endif

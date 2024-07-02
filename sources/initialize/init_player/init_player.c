@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_player.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 10:56:23 by hhagiwar          #+#    #+#             */
+/*   Updated: 2024/07/02 11:06:46 by hhagiwar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void		find_player_position(t_player *player, t_data *data);
@@ -33,9 +45,7 @@ void	find_player_position(t_player *player, t_data *data)
 	{
 		while (j < data->w_map)
 		{
-			if (data->map[i][j] == PLAYER_EAST || data->map[i][j] == PLAYER_WEST
-				|| data->map[i][j] == PLAYER_SOUTH
-				|| data->map[i][j] == PLAYER_NORTH)
+			if (is_direction_map(data->map[i][j]) == TRUE)
 			{
 				player_count++;
 				if (player_count == 2)
