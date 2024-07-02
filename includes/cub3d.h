@@ -60,6 +60,18 @@
 # define GREEN 0x00B16B
 # define CORNSILK 0xFFF8DC
 
+typedef struct s_int_point
+{
+	int					x;
+	int					y;
+}						t_int_point;
+
+typedef struct s_float_point
+{
+	float				x;
+	float				y;
+}						t_float_point;
+
 typedef struct s_mlx
 {
 	void				*img;
@@ -76,7 +88,7 @@ typedef struct s_player
 	int					plyr_x;
 	int					plyr_y;
 	double				angle;
-	float fov_rd; // 既にあるかもしれません
+	float				fov_rd;
 	int					player_status;
 }						t_player;
 
@@ -156,7 +168,7 @@ t_texture				*load_texture_from_bmp(const char *file_path);
 void					draw_minimap(t_data *data, t_mlx img);
 void					draw_square(t_mlx *img, int start_x, int start_y,
 							int color, int size);
-void					draw_grid(t_mlx *img, int x, int y, int color,
+void					draw_grid(t_mlx *img, t_int_point p, int color,
 							int size);
 void					draw_player(t_mlx *img, t_data *data);
 void					draw_line(t_mlx *img, int start_x, int start_y,

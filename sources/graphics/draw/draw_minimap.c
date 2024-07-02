@@ -2,33 +2,32 @@
 
 void	draw_minimap(t_data *data, t_mlx img)
 {
-	int	x;
-	int	y;
+	t_int_point p;
 	int	color;
 
-	x = 0;
-	y = 0;
-	while (y < data->h_map)
+	p.x = 0;
+	p.y = 0;
+	while (p.y < data->h_map)
 	{
-		x = 0;
-		while (x < data->w_map)
+		p.x = 0;
+		while (p.x < data->w_map)
 		{
-			if (data->map[y][x] == WALL || data->map[y][x] == FORBIDDEN_SPACE)
+			if (data->map[p.y][p.x] == WALL || data->map[p.y][p.x] == FORBIDDEN_SPACE)
 			{
-				if (data->map[y][x] == WALL)
+				if (data->map[p.y][p.x] == WALL)
 					color = WHITE;
-				else if (data->map[y][x] == FORBIDDEN_SPACE)
+				else if (data->map[p.y][p.x] == FORBIDDEN_SPACE)
 					color = RED;
-				draw_square(&img, x * TILE_SIZE, y * TILE_SIZE, color,
+				draw_square(&img, p.x * TILE_SIZE, p.y * TILE_SIZE, color,
 					TILE_SIZE);
 			}
-			draw_grid(&img, x, y, GREY, TILE_SIZE);
-			if (data->map[y][x] >= PLAYER_NORTH
-				&& data->map[y][x] <= PLAYER_WEST)
+			draw_grid(&img, p, GREY, TILE_SIZE);
+			if (data->map[p.y][p.x] >= PLAYER_NORTH
+				&& data->map[p.y][p.x] <= PLAYER_WEST)
 				draw_player(&img, data);
-			x++;
+			(p.x)++;
 		}
-		y++;
+		(p.y)++;
 	}
 	mlx_put_image_to_window(data->img.mlx, data->img.mlx_win, data->img.img, 0,
 		0);
