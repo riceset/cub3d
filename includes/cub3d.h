@@ -171,8 +171,8 @@ void					draw_square(t_mlx *img, int start_x, int start_y,
 void					draw_grid(t_mlx *img, t_int_point p, int color,
 							int size);
 void					draw_player(t_mlx *img, t_data *data);
-void					draw_line(t_mlx *img, int start_x, int start_y,
-							int end_x, int end_y, int color);
+void					draw_line(t_mlx *img, t_int_point start,
+							t_int_point end, int color);
 void					draw_ray_minimap(t_mlx *img, t_data *data, double angle,
 							int color);
 void					draw_textured_wall(t_mlx *img, int ray,
