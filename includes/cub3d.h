@@ -171,8 +171,7 @@ void				draw_wall(t_mlx *img, int ray, int top_pixel,
 // init
 t_data				*init_data(char **argv);
 t_player			*init_player(t_data *data);
-int					**init_map(char *filename, int h_map, int w_map,
-						t_data *data);
+int					**init_map(char *filename, t_data *data);
 double				init_angle(t_player *player);
 t_player			*init_player(t_data *data);
 
@@ -193,11 +192,10 @@ int					open_file(const char *filename, t_data *data);
 void				free_array(char **array);
 int					rgb_to_int(int r, int g, int b);
 int					check_line(char *line);
-int					**allocate_map_memory(int h_map, int w_map, t_data *data);
+int					**allocate_map_memory(t_data *data);
 int					**copy_map(int **src, int h_map, int w_map);
 int					determine_wall_direction(t_data *data, double ray_angle);
-void				fill_map_row(int *map_row, char *line, int w_map,
-						t_data *data);
+void				fill_map_row(int *map_row, char *line, t_data *data);
 int					close_window(void *param);
 int					key_press(int keycode, t_data *data);
 int					is_hitting_wall(float player_center_x,

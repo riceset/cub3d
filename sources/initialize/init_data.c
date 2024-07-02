@@ -6,7 +6,7 @@
 /*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:11:09 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/06/30 17:11:11 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/07/02 23:58:44 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_data	*init_data(char **argv)
 	data->w_map = get_map_width(argv[1], data);
 	if (data->h_map < 3 || data->w_map < 3)
 		ft_exit("Map Error", data);
-	data->map = init_map(argv[1], data->h_map, data->w_map, data);
+	data->map = init_map(argv[1], data);
 	data->player = init_player(data);
 	print_map(data->map, data->w_map, data->h_map);
 	if (validate_map(data))
