@@ -6,7 +6,7 @@
 /*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 18:11:47 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/06/30 18:11:50 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/07/03 00:11:42 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,20 @@ int	get_map_colors(char *filename, t_data *data, char type)
 	fd = open_file(filename, data);
 	if (fd == -1)
 		ft_exit("Error opening file", data);
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (line[0] == type && ft_isspace(line[1]))
 		{
 			if (color != -1 || check_line(line) == ERROR)
-				handle_error(line, fd, data);
+			{
+				free(line);
+				handle_error(NULL, fd, data);
+			}
 			color = process_color_line(line, fd, data);
 		}
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (color);
