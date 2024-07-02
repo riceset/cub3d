@@ -166,8 +166,8 @@ t_texture				*load_texture_from_bmp(const char *file_path);
 
 // draw
 void					draw_minimap(t_data *data, t_mlx img);
-void					draw_square(t_mlx *img, int start_x, int start_y,
-							int color, int size);
+void					draw_square(t_mlx *img, t_int_point start, int color,
+							int size);
 void					draw_grid(t_mlx *img, t_int_point p, int color,
 							int size);
 void					draw_player(t_mlx *img, t_data *data);
