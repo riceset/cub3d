@@ -60,6 +60,12 @@
 # define GREEN 0x00B16B
 # define CORNSILK 0xFFF8DC
 
+typedef struct s_int_point
+{
+	int					x;
+	int					y;
+}						t_int_point;
+
 typedef struct s_mlx
 {
 	void			*img;
@@ -138,8 +144,7 @@ typedef struct s_texture_data
 void				render_wall(t_data *data, t_mlx *img);
 float				cast_ray(t_data *data, double angle);
 void				render_wall(t_data *data, t_mlx *img);
-void				flood_fill(int **map, int x, int y, int h_map, int w_map,
-						int *status);
+void				flood_fill(int **map, t_int_point point, t_data *data, int *status);
 void				update_graphics(t_data *data);
 void				start_game(t_data *data);
 int					validate_map(t_data *data);
