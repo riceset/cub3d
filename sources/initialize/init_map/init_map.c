@@ -6,13 +6,13 @@
 /*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 18:00:13 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/06/30 18:33:02 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/07/03 00:02:50 by hhagiwar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	process_line(char *line, int **map, int row_index, int w_map, t_data *data)
+int	process_line(char *line, int **map, int row_index, t_data *data)
 {
 	char	*temp;
 
@@ -23,13 +23,13 @@ int	process_line(char *line, int **map, int row_index, int w_map, t_data *data)
 		return (0);
 	if (ft_isdigit(*temp))
 	{
-		fill_map_row(map[row_index], line, w_map, data);
+		fill_map_row(map[row_index], line, data);
 		return (1);
 	}
 	return (0);
 }
 
-int	**init_map(char *filename, int h_map, int w_map, t_data *data)
+int	**init_map(char *filename, t_data *data)
 {
 	int		fd;
 	int		**map;
@@ -37,16 +37,16 @@ int	**init_map(char *filename, int h_map, int w_map, t_data *data)
 	int		i;
 
 	i = 0;
-	map = allocate_map_memory(h_map, w_map, data);
+	map = allocate_map_memory(data);
 	fd = open_file(filename, data);
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		if (process_line(line, map, i, w_map, data))
+		if (process_line(line, map, i, data))
 			i++;
 		free(line);
+		line = get_next_line(fd);
 	}
-	while ((line = get_next_line(fd)) != NULL)
-		free(line);
 	close(fd);
 	return (map);
 }

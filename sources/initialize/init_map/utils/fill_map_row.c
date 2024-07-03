@@ -1,35 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_map_row.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 23:57:28 by hhagiwar          #+#    #+#             */
+/*   Updated: 2024/07/02 23:57:52 by hhagiwar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	fill_map_row(int *map_row, char *line, int w_map, t_data *data)
+void	process_map_char(int *map_row, char c, int index, t_data *data)
+{
+	if (c == ' ')
+		map_row[index] = FORBIDDEN_SPACE;
+	else if (c == '1')
+		map_row[index] = WALL;
+	else if (c == '0')
+		map_row[index] = FREE_SPACE;
+	else if (c == 'N')
+		map_row[index] = PLAYER_NORTH;
+	else if (c == 'S')
+		map_row[index] = PLAYER_SOUTH;
+	else if (c == 'E')
+		map_row[index] = PLAYER_EAST;
+	else if (c == 'W')
+		map_row[index] = PLAYER_WEST;
+	else
+		ft_exit("Map Error", data);
+}
+
+void	fill_remaining_spaces(int *map_row, int start_index, int w_map)
+{
+	while (start_index < w_map)
+	{
+		map_row[start_index] = FORBIDDEN_SPACE;
+		start_index++;
+	}
+}
+
+void	fill_map_row(int *map_row, char *line, t_data *data)
 {
 	int	j;
 
 	j = 0;
-	while ((line[j] != '\0' && line[j] != '\n') && j < w_map)
+	while ((line[j] != '\0' && line[j] != '\n') && j < data->w_map)
 	{
-		if (line[j] == ' ')
-			map_row[j] = FORBIDDEN_SPACE;
-		else if (line[j] == '1')
-			map_row[j] = WALL;
-		else if (line[j] == '0')
-			map_row[j] = FREE_SPACE;
-		else if (line[j] == 'N')
-			map_row[j] = PLAYER_NORTH;
-		else if (line[j] == 'S')
-			map_row[j] = PLAYER_SOUTH;
-		else if (line[j] == 'E')
-			map_row[j] = PLAYER_EAST;
-		else if (line[j] == 'W')
-			map_row[j] = PLAYER_WEST;
-		else if (line[j] == ' ')
-			map_row[j] = FORBIDDEN_SPACE;
-		else
-			ft_exit("Map Error", data);
+		process_map_char(map_row, line[j], j, data);
 		j++;
 	}
-	while (j < w_map)
-	{
-		map_row[j] = FORBIDDEN_SPACE;
-		j++;
-	}
+	fill_remaining_spaces(map_row, j, data->w_map);
 }
