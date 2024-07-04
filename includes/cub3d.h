@@ -140,6 +140,14 @@ typedef struct s_texture_data
 	t_texture		*texture[4];
 }					t_texture_data;
 
+typedef struct s_float_point
+{
+	float				x;
+	float				y;
+}						t_float_point;
+
+typedef unsigned char	byte;
+
 // cub3d
 void				render_wall(t_data *data, t_mlx *img);
 float				cast_ray(t_data *data, double angle);
