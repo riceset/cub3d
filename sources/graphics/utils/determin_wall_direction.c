@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   determin_wall_direction.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 17:17:43 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/02 17:23:40 by riceset          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 float	calculate_initial_position(float player_position, int tile_size)
@@ -15,61 +27,58 @@ float	calculate_step(double angle, int is_x_step)
 		result = -sin(angle) / 45;
 	return (result);
 }
-int	trace_ray(t_data *data, float x, float y, float x_step, float y_step)
-{
-	int	previous_x;
-	int	previous_y;
-	int	current_x;
-	int	current_y;
 
-	previous_x = (int)(x / TILE_SIZE);
-	previous_y = (int)(y / TILE_SIZE);
-	while (data->map[(int)(y / TILE_SIZE)][(int)(x / TILE_SIZE)] != WALL)
+int	trace_ray(t_data *data, t_float_point p, t_float_point step)
+{
+	t_int_point	prev;
+	t_int_point	curr;
+
+	prev.x = (int)(p.x / TILE_SIZE);
+	prev.y = (int)(p.y / TILE_SIZE);
+	while (data->map[(int)(p.y / TILE_SIZE)][(int)(p.x / TILE_SIZE)] != WALL)
 	{
-		x += x_step;
-		y += y_step;
-		if (x < 0 || x >= data->w_map * TILE_SIZE || y < 0 || y >= data->h_map
-			* TILE_SIZE)
+		p.x += step.x;
+		p.y += step.y;
+		if (p.x < 0 || p.x >= data->w_map * TILE_SIZE || p.y < 0
+			|| p.y >= data->h_map * TILE_SIZE)
 			break ;
-		current_x = (int)(x / TILE_SIZE);
-		current_y = (int)(y / TILE_SIZE);
-		if (current_y >= 0 && current_y < data->h_map && current_x >= 0
-			&& current_x < data->w_map)
+		curr.x = (int)(p.x / TILE_SIZE);
+		curr.y = (int)(p.y / TILE_SIZE);
+		if (curr.y >= 0 && curr.y < data->h_map && curr.x >= 0
+			&& curr.x < data->w_map)
 		{
-			if (data->map[current_y][current_x] == WALL)
+			if (data->map[curr.y][curr.x] == WALL)
 			{
-				if (current_x != previous_x)
+				if (curr.x != prev.x)
 				{
-					if (x_step > 0)
+					if (step.x > 0)
 						return (WEST);
 					else
 						return (EAST);
 				}
-				else if (current_y != previous_y)
+				else if (curr.y != prev.y)
 				{
-					if (y_step > 0)
+					if (step.y > 0)
 						return (NORTH);
 					else
 						return (SOUTH);
 				}
 			}
 		}
-		previous_x = current_x;
-		previous_y = current_y;
+		prev.x = curr.x;
+		prev.y = curr.y;
 	}
 	return (0);
 }
 
 int	determine_wall_direction(t_data *data, double ray_angle)
 {
-	float	x;
-	float	y;
-	float	x_step;
-	float	y_step;
+	t_float_point	p;
+	t_float_point	step;
 
-	x = calculate_initial_position(data->player->plyr_x, TILE_SIZE);
-	y = calculate_initial_position(data->player->plyr_y, TILE_SIZE);
-	x_step = calculate_step(ray_angle, 1);
-	y_step = calculate_step(ray_angle, 0);
-	return (trace_ray(data, x, y, x_step, y_step));
+	p.x = calculate_initial_position(data->player->plyr_x, TILE_SIZE);
+	p.y = calculate_initial_position(data->player->plyr_y, TILE_SIZE);
+	step.x = calculate_step(ray_angle, 1);
+	step.y = calculate_step(ray_angle, 0);
+	return (trace_ray(data, p, step));
 }

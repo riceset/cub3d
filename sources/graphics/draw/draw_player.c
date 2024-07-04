@@ -1,23 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_player.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/02 16:44:25 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/02 16:47:31 by riceset          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_player_rectangle(t_mlx *img, t_data *data)
 {
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-	int	i;
-	int	j;
+	t_int_point	start;
+	t_int_point	end;
+	int			i;
+	int			j;
 
-	start_x = data->player->plyr_x + TILE_SIZE * 3 / 8;
-	start_y = data->player->plyr_y + TILE_SIZE * 3 / 8;
-	end_x = start_x + TILE_SIZE * 2 / 7;
-	end_y = start_y + TILE_SIZE * 2 / 7;
-	i = start_y;
-	while (i < end_y)
+	start.x = data->player->plyr_x + TILE_SIZE * 3 / 8;
+	start.y = data->player->plyr_y + TILE_SIZE * 3 / 8;
+	end.x = start.x + TILE_SIZE * 2 / 7;
+	end.y = start.y + TILE_SIZE * 2 / 7;
+	i = start.y;
+	while (i < end.y)
 	{
-		j = start_x;
-		while (j < end_x)
+		j = start.x;
+		while (j < end.x)
 		{
 			my_mlx_pixel_put(img, j, i, YELLOW);
 			j++;
