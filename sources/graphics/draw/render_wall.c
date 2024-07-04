@@ -6,7 +6,7 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:58:07 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:18:23 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:45:39 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,19 @@ void	render_wall(t_data *data, t_mlx *img)
 {
 	int				ray;
 	float			distance;
-	t_wall_data		wall_data;
-	t_texture_data	tex_data;
+	t_wall_tex_data	walltex;
 
 	ray = 0;
-	load_textures(data, tex_data.texture);
+	load_textures(data, walltex.tex_data.texture);
 	while (ray < WIDTH)
 	{
 		distance = calculate_ray_distance(data, ray);
-		fill_wall_data(&wall_data, distance, data);
-		draw_textured_wall(img, ray, &wall_data, &tex_data, data);
-		draw_ceiling_floor(data, img, ray, &wall_data);
+		fill_wall_data(&walltex.wall_data, distance, data);
+		draw_textured_wall(img, ray, &walltex, data);
+		draw_ceiling_floor(data, img, ray, &walltex.wall_data);
 		ray++;
 	}
-	free_textures(tex_data.texture);
+	free_textures(walltex.tex_data.texture);
 }
 
 float	calculate_ray_distance(t_data *data, int ray)

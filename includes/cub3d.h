@@ -6,7 +6,7 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:43:23 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:22:05 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:52:43 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,12 @@ typedef struct s_texture_data
 	t_texture			*texture[4];
 }						t_texture_data;
 
+typedef struct s_wall_tex_data
+{
+	t_wall_data			wall_data;
+	t_texture_data		tex_data;
+}						t_wall_tex_data;
+
 typedef unsigned char	byte;
 
 void					render_wall(t_data *data, t_mlx *img);
@@ -193,8 +199,7 @@ void					draw_line(t_mlx *img, t_int_point start,
 void					draw_ray_minimap(t_mlx *img, t_data *data, double angle,
 							int color);
 void					draw_textured_wall(t_mlx *img, int ray,
-							t_wall_data *wall_data, t_texture_data *tex_data,
-							t_data *data);
+							t_wall_tex_data *walltex, t_data *data);
 t_data					*init_data(char **argv);
 t_player				*init_player(t_data *data);
 int						**init_map(char *filename, t_data *data);
@@ -235,15 +240,20 @@ void					draw_floor(t_mlx *img, int ray, int top_pixel,
 							int color);
 void					draw_ceiling(t_mlx *img, int ray, int bottom_pixel,
 							int color);
-void					draw_textured_wall(t_mlx *img, int ray,
-							t_wall_data *wall_data, t_texture_data *tex_data,
-							t_data *data);
 void					calculate_hits_and_texture(t_data *data,
-							double ray_angle, double distance, int direction,
+							double ray_angle, int direction,
 							t_texture_data *tex_data);
 int						get_direction(t_data *data, int ray,
 							t_texture_data *tex_data);
 void					draw_textured_pixels(t_mlx *img, int ray, int direction,
-							t_wall_data *wall_data, t_texture_data *tex_data);
+							t_wall_tex_data *walltex);
+void					handle_east(t_data *data, double distance,
+							double ray_angle, t_texture_data *tex_data);
+void					handle_west(t_data *data, double distance,
+							double ray_angle, t_texture_data *tex_data);
+void					handle_south(t_data *data, double distance,
+							double ray_angle, t_texture_data *tex_data);
+void					handle_north(t_data *data, double distance,
+							double ray_angle, t_texture_data *tex_data);
 
 #endif

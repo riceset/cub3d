@@ -6,7 +6,7 @@
 /*   By: hhagiwar <hhagiwar@tokyo.42.school>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/30 17:10:32 by hhagiwar          #+#    #+#             */
-/*   Updated: 2024/06/30 17:27:39 by hhagiwar         ###   ########.fr       */
+/*   Updated: 2024/07/04 19:54:18 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	main(int argc, char **argv)
 	else
 		ft_exit("Error: Invalid command line arguments. \n \
 		Usage: ./cub3D <path_to_map_file.cub>",
-				NULL);
+			NULL);
 	exit(EXIT_SUCCESS);
 }
