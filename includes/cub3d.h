@@ -6,7 +6,7 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:43:23 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:52:43 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 20:00:40 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define ON_DESTROY 17
 
 // Event masks
-# define KEY_PRESS_MASK (1L << 0)
+# define KEY_PRESS_MASK (1L)
 # define NO_EVENT_MASK (0L)
 
 // Keyboard key codes
@@ -151,10 +151,10 @@ typedef struct s_wall_data
 
 typedef struct s_texture_data
 {
-	double				hitX;
-	double				hitY;
-	double				wallX;
-	int					texX;
+	double				hit_x;
+	double				hit_y;
+	double				wall_x;
+	int					tex_x;
 	t_texture			*texture[4];
 }						t_texture_data;
 
@@ -163,8 +163,6 @@ typedef struct s_wall_tex_data
 	t_wall_data			wall_data;
 	t_texture_data		tex_data;
 }						t_wall_tex_data;
-
-typedef unsigned char	byte;
 
 void					render_wall(t_data *data, t_mlx *img);
 float					calculate_ray_distance(t_data *data, int ray);
@@ -181,7 +179,7 @@ void					update_graphics(t_data *data);
 void					start_game(t_data *data);
 int						validate_map(t_data *data);
 t_texture				*load_texture_from_bmp(const char *file_path);
-int						bytes_to_int(byte *bytes, int num_bytes);
+int						bytes_to_int(unsigned char *bytes, int num_bytes);
 void					read_bmp_header(int fd, int *width, int *height,
 							int *has_alpha);
 int						open_texture_file(const char *file_path);

@@ -6,13 +6,13 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:53:33 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 18:54:31 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:59:05 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	bytes_to_int(byte *bytes, int num_bytes)
+int	bytes_to_int(unsigned char *bytes, int num_bytes)
 {
 	int	i;
 	int	res;

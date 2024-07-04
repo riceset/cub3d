@@ -6,7 +6,7 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:59:28 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:53:32 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:58:11 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_textured_pixels(t_mlx *img, int ray, int direction,
 			if (tex_y >= wt->tex_data.texture[direction]->height)
 				tex_y = wt->tex_data.texture[direction]->height - 1;
 			color = get_texture_color(wt->tex_data.texture[direction],
-					wt->tex_data.texX, tex_y);
+					wt->tex_data.tex_x, tex_y);
 			my_mlx_pixel_put(img, ray, pixel_y, color);
 		}
 	}
