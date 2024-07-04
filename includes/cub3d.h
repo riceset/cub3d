@@ -6,7 +6,7 @@
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 18:43:23 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 18:45:36 by riceset          ###   ########.fr       */
+/*   Updated: 2024/07/04 19:22:05 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,13 @@ void					update_graphics(t_data *data);
 void					start_game(t_data *data);
 int						validate_map(t_data *data);
 t_texture				*load_texture_from_bmp(const char *file_path);
-
-// draw
+int						bytes_to_int(byte *bytes, int num_bytes);
+void					read_bmp_header(int fd, int *width, int *height,
+							int *has_alpha);
+int						open_texture_file(const char *file_path);
+t_texture				*allocate_texture(void);
+void					read_and_validate_header(int fd, t_texture *texture,
+							int *has_alpha);
 void					draw_minimap(t_data *data, t_mlx img);
 void					draw_square(t_mlx *img, t_int_point start, int color,
 							int size);
@@ -190,23 +195,15 @@ void					draw_ray_minimap(t_mlx *img, t_data *data, double angle,
 void					draw_textured_wall(t_mlx *img, int ray,
 							t_wall_data *wall_data, t_texture_data *tex_data,
 							t_data *data);
-void					draw_wall(t_mlx *img, int ray, int top_pixel,
-							int bottom_pixel, int color);
-
-// init
 t_data					*init_data(char **argv);
 t_player				*init_player(t_data *data);
 int						**init_map(char *filename, t_data *data);
 double					init_angle(t_player *player);
-
-// getter
 int						get_map_width(char *filename, t_data *data);
 int						get_map_height(char *filename, t_data *data);
 int						get_map_colors(char *filename, t_data *data, char type);
 int						get_texture_color(t_texture *texture, int x, int y);
 char					**get_textures(char *filename, t_data **data);
-
-// utils
 void					ft_exit(char *err_msg, t_data *data);
 void					print_file(char *filename);
 void					print_map(int **map, int w_map, int h_map);
@@ -229,5 +226,24 @@ void					my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
 char					*extract_filename(char *path);
 void					free_data(t_data *data);
 int						is_direction_map(int data);
+float					calculate_initial_position(float player_position,
+							int tile_size);
+float					calculate_step(double angle, int is_x_step);
+void					free_textures(t_texture *textures[4]);
+void					load_textures(t_data *data, t_texture *textures[4]);
+void					draw_floor(t_mlx *img, int ray, int top_pixel,
+							int color);
+void					draw_ceiling(t_mlx *img, int ray, int bottom_pixel,
+							int color);
+void					draw_textured_wall(t_mlx *img, int ray,
+							t_wall_data *wall_data, t_texture_data *tex_data,
+							t_data *data);
+void					calculate_hits_and_texture(t_data *data,
+							double ray_angle, double distance, int direction,
+							t_texture_data *tex_data);
+int						get_direction(t_data *data, int ray,
+							t_texture_data *tex_data);
+void					draw_textured_pixels(t_mlx *img, int ray, int direction,
+							t_wall_data *wall_data, t_texture_data *tex_data);
 
 #endif

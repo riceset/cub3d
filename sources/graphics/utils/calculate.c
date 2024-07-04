@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_wall.c                                        :+:      :+:    :+:   */
+/*   calculate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 18:59:07 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:18:34 by riceset          ###   ########.fr       */
+/*   Created: 2024/07/04 18:56:06 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/04 18:56:17 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_ceiling(t_mlx *img, int ray, int bottom_pixel, int color)
+float	calculate_initial_position(float player_position, int tile_size)
 {
-	int	pixel_y;
-
-	pixel_y = 0;
-	while (pixel_y < bottom_pixel)
-	{
-		my_mlx_pixel_put(img, ray, pixel_y, color);
-		pixel_y++;
-	}
+	return (player_position + tile_size * 3 / 8 + tile_size / 7);
 }
 
-void	draw_floor(t_mlx *img, int ray, int top_pixel, int color)
+float	calculate_step(double angle, int is_x_step)
 {
-	int	pixel_y;
+	float	result;
 
-	pixel_y = top_pixel;
-	while (pixel_y < HEIGHT)
-	{
-		my_mlx_pixel_put(img, ray, pixel_y, color);
-		pixel_y++;
-	}
+	if (is_x_step)
+		result = cos(angle) / 45;
+	else
+		result = -sin(angle) / 45;
+	return (result);
 }

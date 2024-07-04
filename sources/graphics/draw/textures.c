@@ -1,37 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_wall.c                                        :+:      :+:    :+:   */
+/*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 18:59:07 by riceset           #+#    #+#             */
-/*   Updated: 2024/07/04 19:18:34 by riceset          ###   ########.fr       */
+/*   Created: 2024/07/04 19:04:32 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/04 19:04:40 by riceset          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_ceiling(t_mlx *img, int ray, int bottom_pixel, int color)
+void	free_textures(t_texture *textures[4])
 {
-	int	pixel_y;
+	int	i;
 
-	pixel_y = 0;
-	while (pixel_y < bottom_pixel)
+	i = 0;
+	while (i < 4)
 	{
-		my_mlx_pixel_put(img, ray, pixel_y, color);
-		pixel_y++;
+		if (textures[i] != NULL)
+		{
+			free(textures[i]->data);
+			free(textures[i]);
+		}
+		i++;
 	}
 }
 
-void	draw_floor(t_mlx *img, int ray, int top_pixel, int color)
+void	load_textures(t_data *data, t_texture *textures[4])
 {
-	int	pixel_y;
+	int	i;
 
-	pixel_y = top_pixel;
-	while (pixel_y < HEIGHT)
+	i = 0;
+	while (i < 4)
 	{
-		my_mlx_pixel_put(img, ray, pixel_y, color);
-		pixel_y++;
+		textures[i] = load_texture_from_bmp(extract_filename(data->texture[i]));
+		if (textures[i] == NULL)
+			ft_exit("Failed to load texture", data);
+		i++;
 	}
 }

@@ -1,20 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_wall.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/04 18:58:07 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/04 19:18:23 by riceset          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-void	free_textures(t_texture *textures[4])
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		if (textures[i] != NULL)
-		{
-			free(textures[i]->data);
-			free(textures[i]);
-		}
-		i++;
-	}
-}
 
 void	render_wall(t_data *data, t_mlx *img)
 {
@@ -36,20 +32,6 @@ void	render_wall(t_data *data, t_mlx *img)
 	free_textures(tex_data.texture);
 }
 
-void	load_textures(t_data *data, t_texture *textures[4])
-{
-	int	i;
-
-	i = 0;
-	while (i < 4)
-	{
-		textures[i] = load_texture_from_bmp(extract_filename(data->texture[i]));
-		if (textures[i] == NULL)
-			ft_exit("Failed to load texture", data);
-		i++;
-	}
-}
-
 float	calculate_ray_distance(t_data *data, int ray)
 {
 	double	ray_angle;
@@ -61,8 +43,8 @@ float	calculate_ray_distance(t_data *data, int ray)
 
 int	calculate_wall_height(float distance, t_data *data)
 {
-	return (int)((TILE_SIZE / distance) * (WIDTH / (2 * tan(data->player->fov_rd
-					/ 2))));
+	return ((int)((TILE_SIZE / distance) * (WIDTH / (2
+				* tan(data->player->fov_rd / 2)))));
 }
 
 void	fill_wall_data(t_wall_data *wall_data, float distance, t_data *data)
@@ -76,7 +58,6 @@ void	fill_wall_data(t_wall_data *wall_data, float distance, t_data *data)
 void	draw_ceiling_floor(t_data *data, t_mlx *img, int ray,
 		t_wall_data *wall_data)
 {
-	draw_wall(img, ray, 0, wall_data->top_pixel, data->colors.ceiling_color);
-	draw_wall(img, ray, wall_data->bottom_pixel, HEIGHT,
-		data->colors.floor_color);
+	draw_ceiling(img, ray, wall_data->top_pixel, data->colors.ceiling_color);
+	draw_floor(img, ray, wall_data->bottom_pixel, data->colors.floor_color);
 }
