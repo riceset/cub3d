@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: riceset <tkomeno@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/04 18:43:23 by riceset           #+#    #+#             */
+/*   Updated: 2024/07/04 18:45:36 by riceset          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -66,44 +78,50 @@ typedef struct s_int_point
 	int					y;
 }						t_int_point;
 
+typedef struct s_float_point
+{
+	float				x;
+	float				y;
+}						t_float_point;
+
 typedef struct s_mlx
 {
-	void			*img;
-	char			*addr;
-	void			*mlx;
-	void			*mlx_win;
-	int				bits_per_pixel;
-	int				line_length;
-	int				endian;
-}					t_mlx;
+	void				*img;
+	char				*addr;
+	void				*mlx;
+	void				*mlx_win;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+}						t_mlx;
 
 typedef struct s_player
 {
-	int				plyr_x;
-	int				plyr_y;
-	double			angle;
-	float			fov_rd;
-	int				player_status;
-}					t_player;
+	int					plyr_x;
+	int					plyr_y;
+	double				angle;
+	float				fov_rd;
+	int					player_status;
+}						t_player;
 
 typedef struct s_colors
 {
-	int				floor_color;
-	int				ceiling_color;
-}					t_colors;
+	int					floor_color;
+	int					ceiling_color;
+}						t_colors;
 
 typedef struct s_data
 {
-	int				**map;
-	int				p_x;
-	int				p_y;
-	int				w_map;
-	int				h_map;
-	t_player		*player;
-	t_mlx			img;
-	t_colors		colors;
-	char			*texture[4];
-}					t_data;
+	int					**map;
+	int					p_x;
+	int					p_y;
+	int					w_map;
+	int					h_map;
+	t_player			*player;
+	t_mlx				img;
+	t_colors			colors;
+	char				*texture[4];
+}						t_data;
 
 typedef enum e_map_element
 {
@@ -114,108 +132,102 @@ typedef enum e_map_element
 	PLAYER_SOUTH,
 	PLAYER_EAST,
 	PLAYER_WEST,
-}					t_map_element;
+}						t_map_element;
 
 typedef struct s_texture
 {
-	unsigned char	*data;
-	int				height;
-	int				width;
-}					t_texture;
+	unsigned char		*data;
+	int					height;
+	int					width;
+}						t_texture;
 
 typedef struct s_wall_data
 {
-	int				top_pixel;
-	int				bottom_pixel;
-	int				wall_height;
-	float			distance;
-}					t_wall_data;
+	int					top_pixel;
+	int					bottom_pixel;
+	int					wall_height;
+	float				distance;
+}						t_wall_data;
 
 typedef struct s_texture_data
 {
-	double			hitX;
-	double			hitY;
-	double			wallX;
-	int				texX;
-	t_texture		*texture[4];
-}					t_texture_data;
-
-typedef struct s_float_point
-{
-	float				x;
-	float				y;
-}						t_float_point;
+	double				hitX;
+	double				hitY;
+	double				wallX;
+	int					texX;
+	t_texture			*texture[4];
+}						t_texture_data;
 
 typedef unsigned char	byte;
 
-// cub3d
-void				render_wall(t_data *data, t_mlx *img);
-float				cast_ray(t_data *data, double angle);
-void				render_wall(t_data *data, t_mlx *img);
-void				flood_fill(int **map, t_int_point point, t_data *data, int *status);
-void				update_graphics(t_data *data);
-void				start_game(t_data *data);
-int					validate_map(t_data *data);
-t_texture			*load_texture_from_bmp(const char *file_path);
-void				update_graphics(t_data *data);
+void					render_wall(t_data *data, t_mlx *img);
+float					calculate_ray_distance(t_data *data, int ray);
+void					draw_ceiling_floor(t_data *data, t_mlx *img, int ray,
+							t_wall_data *wall_data);
+void					fill_wall_data(t_wall_data *wall_data, float distance,
+							t_data *data);
+void					load_textures(t_data *data, t_texture *textures[4]);
+void					free_textures(t_texture *textures[4]);
+float					cast_ray(t_data *data, double angle);
+void					flood_fill(int **map, t_int_point point, t_data *data,
+							int *status);
+void					update_graphics(t_data *data);
+void					start_game(t_data *data);
+int						validate_map(t_data *data);
+t_texture				*load_texture_from_bmp(const char *file_path);
 
 // draw
-void				draw_minimap(t_data *data, t_mlx img);
-void				draw_square(t_mlx *img, int start_x, int start_y, int color,
-						int size);
-void				draw_grid(t_mlx *img, int x, int y, int size);
-void				draw_player(t_mlx *img, t_data *data);
-void				draw_line(t_mlx *img, int start_x, int start_y, int end_x,
-						int end_y, int color);
-void				draw_line(t_mlx *img, int start_x, int start_y, int end_x,
-						int end_y, int color);
-void				draw_square(t_mlx *img, int start_x, int start_y, int color,
-						int size);
-void				draw_player(t_mlx *img, t_data *data);
-void				draw_ray_minimap(t_mlx *img, t_data *data, double angle,
-						int color);
-void				draw_minimap(t_data *data, t_mlx img);
-void				draw_textured_wall(t_mlx *img, int ray,
-						t_wall_data *wall_data, t_texture_data *tex_data,
-						t_data *data);
-void				draw_wall(t_mlx *img, int ray, int top_pixel,
-						int bottom_pixel, int color);
+void					draw_minimap(t_data *data, t_mlx img);
+void					draw_square(t_mlx *img, t_int_point start, int color,
+							int size);
+void					draw_grid(t_mlx *img, t_int_point p, int color,
+							int size);
+void					draw_player(t_mlx *img, t_data *data);
+void					draw_line(t_mlx *img, t_int_point start,
+							t_int_point end, int color);
+void					draw_ray_minimap(t_mlx *img, t_data *data, double angle,
+							int color);
+void					draw_textured_wall(t_mlx *img, int ray,
+							t_wall_data *wall_data, t_texture_data *tex_data,
+							t_data *data);
+void					draw_wall(t_mlx *img, int ray, int top_pixel,
+							int bottom_pixel, int color);
 
 // init
-t_data				*init_data(char **argv);
-t_player			*init_player(t_data *data);
-int					**init_map(char *filename, t_data *data);
-double				init_angle(t_player *player);
-t_player			*init_player(t_data *data);
+t_data					*init_data(char **argv);
+t_player				*init_player(t_data *data);
+int						**init_map(char *filename, t_data *data);
+double					init_angle(t_player *player);
 
 // getter
-int					get_map_width(char *filename, t_data *data);
-int					get_map_height(char *filename, t_data *data);
-int					get_map_colors(char *filename, t_data *data, char type);
-int					get_texture_color(t_texture *texture, int x, int y);
-char				**get_textures(char *filename, t_data **data);
+int						get_map_width(char *filename, t_data *data);
+int						get_map_height(char *filename, t_data *data);
+int						get_map_colors(char *filename, t_data *data, char type);
+int						get_texture_color(t_texture *texture, int x, int y);
+char					**get_textures(char *filename, t_data **data);
 
 // utils
-void				ft_exit(char *err_msg, t_data *data);
-void				print_file(char *filename);
-void				print_map(int **map, int w_map, int h_map);
-int					extension_check(char *filename);
-int					num_count(char *str);
-int					open_file(const char *filename, t_data *data);
-void				free_array(char **array);
-int					rgb_to_int(int r, int g, int b);
-int					check_line(char *line);
-int					**allocate_map_memory(t_data *data);
-int					**copy_map(int **src, int h_map, int w_map);
-int					determine_wall_direction(t_data *data, double ray_angle);
-void				fill_map_row(int *map_row, char *line, t_data *data);
-int					close_window(void *param);
-int					key_press(int keycode, t_data *data);
-int					is_hitting_wall(float player_center_x,
-						float player_center_y, t_data *data);
-void				my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
-char				*extract_filename(char *path);
-void				free_data(t_data *data);
-int					is_direction_map(int data);
+void					ft_exit(char *err_msg, t_data *data);
+void					print_file(char *filename);
+void					print_map(int **map, int w_map, int h_map);
+int						extension_check(char *filename);
+int						num_count(char *str);
+int						open_file(const char *filename, t_data *data);
+void					free_array(char **array);
+int						rgb_to_int(int r, int g, int b);
+int						check_line(char *line);
+int						**allocate_map_memory(t_data *data);
+int						**copy_map(int **src, int h_map, int w_map);
+int						determine_wall_direction(t_data *data,
+							double ray_angle);
+void					fill_map_row(int *map_row, char *line, t_data *data);
+int						close_window(void *param);
+int						key_press(int keycode, t_data *data);
+int						is_hitting_wall(float player_center_x,
+							float player_center_y, t_data *data);
+void					my_mlx_pixel_put(t_mlx *img, int x, int y, int color);
+char					*extract_filename(char *path);
+void					free_data(t_data *data);
+int						is_direction_map(int data);
 
 #endif
